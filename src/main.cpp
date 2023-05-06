@@ -2,6 +2,7 @@
 #include <Wire.h>
 #include <Servo.h>
 
+#include "Ultrasonic.h"
 #include "config.h"
 #include "BlocMoteurs.h"
 #include "MagneticEncodeurs.h"
@@ -9,16 +10,23 @@
 #include "ControleurPID.h"
 #include "Evitement.h"
 
+
+Ultrasonic ultrasonic(D7, D8);
+int distance;
+
 void setup() {
     pinMode(D7, OUTPUT); //Trig
     pinMode(D8, INPUT); //Echo
-    Serial.begin (115200);
+    Serial.begin(9600);
+
 }
 
 void loop() {
-    Capteurs Reseau;
-    Reseau.Trig[0] = D7;
-    Reseau.Echo[0] = D8;
+    
+    distance = ultrasonic.read();
 
-    Serial.println(Reseau.RetourCapteur(0));
+    Serial.print("Distance in CM: ");
+    Serial.println(distance);
+
+    
 }
