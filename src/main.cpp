@@ -31,14 +31,14 @@ int distance;
 // If you select a Timer not correctly, you'll get a message from ci[ompiler
 // 'TIMxx' was not declared in this scope; did you mean 'TIMyy'? 
 
-// Init STM32 timer TIM1
+// Init STM32 timer TIM2
 STM32Timer ITimer(TIM2);
 
 // Init STM32_ISR_Timer
 // Each STM32_ISR_Timer can service 16 different ISR-based timers
 STM32_ISR_Timer ISR_Timer;
 
-#define TIMER_INTERVAL_0_1S           1000L
+#define TIMER_INTERVAL_0_1S           100L
 
 void TimerHandler()
 {
@@ -51,7 +51,10 @@ void TimerHandler()
 void doingSomething1()
 {
   distance = ultrasonic.read();
-  Serial.println(distance);
+  if(distance)
+  {
+    Serial.println(distance);
+  }
 }
 
 
