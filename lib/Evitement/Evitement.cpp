@@ -18,11 +18,7 @@ void Evitement(Ultrasonic avant, Ultrasonic droite, Ultrasonic gauche, Ultrasoni
             //Si une valeur insatisfaisante est captée, le compteur redemarre.
             while(secu < 10)
             {
-                distance[0] = avant.read();
-                distance[1] = droite.read();
-                distance[2] = gauche.read();
-                distance[3] = arriere.read();
-
+                
                 if((avant.read() < limitecm) && (droite.read() < limitecm) && (gauche.read() < limitecm) && (arriere.read() < limitecm))
                 {
                     secu++;
