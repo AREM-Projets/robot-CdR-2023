@@ -1,6 +1,6 @@
 #include "Evitement.h"
 
-#define limitecm 30
+#define limitecm 20
 
 
 void Evitement(Ultrasonic avant, Ultrasonic droite, Ultrasonic gauche, Ultrasonic arriere, BlocMoteurs* motors)
@@ -12,11 +12,11 @@ void Evitement(Ultrasonic avant, Ultrasonic droite, Ultrasonic gauche, Ultrasoni
     {
         if((distance[i] != 0) && (distance[i] < limitecm))
         {
-            motors->commande_vitesses(0,0,0,0); //Arrête le robot
+            motors->motors_stop_low_hiz(); //Arrête le robot
 
             //Doit lire 20 fois une distance de proximité satisfaisante avant de redémarrer. 
             //Si une valeur insatisfaisante est captée, le compteur redemarre.
-            while(secu < 20)
+            while(secu < 10)
             {
                 distance[0] = avant.read();
                 distance[1] = droite.read();
@@ -35,7 +35,8 @@ void Evitement(Ultrasonic avant, Ultrasonic droite, Ultrasonic gauche, Ultrasoni
                 
             }
 
-            //A intégrer, aller jusqu'au point
+            motors->motors_on();
+            //Attente de l'odométrie pour faire aller le robot jusqu'à un point donner
         }
     }
 }
