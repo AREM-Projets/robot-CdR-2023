@@ -10,8 +10,11 @@
 #include "ControleurPID.h"
 #include "Evitement.h"
 
-Ultrasonic ultrasonic(D8, D7);
-int distance;
+Ultrasonic avant(D1, D2);
+Ultrasonic droite(D3, D4);
+Ultrasonic gauche(D5, D6);
+Ultrasonic arriere(D7, D8);
+BlocMoteurs* motors;
 
 // These define's must be placed at the beginning before #include "STM32TimerInterrupt.h"
 // _TIMERINTERRUPT_LOGLEVEL_ from 0 to 4
@@ -48,13 +51,9 @@ void TimerHandler()
 // In STM32, avoid doing something fancy in ISR, for example complex Serial.print with String() argument
 // The pure simple Serial.prints here are just for demonstration and testing. Must be eliminate in working environment
 // Or you can get this run-time error / crash
-void doingSomething1()
+void doingSomething()
 {
-  distance = ultrasonic.read();
-  if(distance)
-  {
-    Serial.println(distance);
-  }
+  Evitement(avant, droite, gauche, arriere, motors);
 }
 
 
@@ -72,9 +71,16 @@ void setup()
   // Instantiate HardwareTimer object. Thanks to 'new' instanciation, HardwareTimer is not destructed when setup() function is finished.
   //HardwareTimer *MyTim = new HardwareTimer(Instance);
 
-  // configure pin in output mode
-  pinMode(D8, OUTPUT); //Trig
-  pinMode(D7, INPUT); //Echo
+  // configure pin in output/intput mode
+  pinMode(D1, OUTPUT); //Trig
+  pinMode(D2, INPUT); //Echo
+  pinMode(D3, OUTPUT); //Trig
+  pinMode(D4, INPUT); //Echo
+  pinMode(D5, OUTPUT); //Trig
+  pinMode(D6, INPUT); //Echo
+  pinMode(D7, OUTPUT); //Trig
+  pinMode(D8, INPUT); //Echo
+
 
   // Interval in microsecs
   if (ITimer.attachInterruptInterval(HW_TIMER_INTERVAL_MS * 1000, TimerHandler))
@@ -86,7 +92,7 @@ void setup()
 
   // Just to demonstrate, don't use too many ISR Timers if not absolutely necessary
   // You can use up to 16 timer for each ISR_Timer
-  ISR_Timer.setInterval(TIMER_INTERVAL_0_1S,  doingSomething1);
+  ISR_Timer.setInterval(TIMER_INTERVAL_0_1S,  doingSomething);
 }
 
 
