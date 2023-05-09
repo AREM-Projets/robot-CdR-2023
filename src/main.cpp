@@ -10,10 +10,7 @@
 #include "ControleurPID.h"
 #include "Evitement.h"
 
-Ultrasonic avant(D1, D2);
-Ultrasonic droite(D3, D4);
-Ultrasonic gauche(D5, D6);
-Ultrasonic arriere(D7, D8);
+Ultrasonic capteurs[4] = {(D1,D2), (D3,D4), (D5,D6), (D7,D8)};
 BlocMoteurs* motors;
 
 // These define's must be placed at the beginning before #include "STM32TimerInterrupt.h"
@@ -53,7 +50,7 @@ void TimerHandler()
 // Or you can get this run-time error / crash
 void doingSomething()
 {
-  Evitement(avant, droite, gauche, arriere, motors);
+  Evitement(capteurs, motors);
 }
 
 

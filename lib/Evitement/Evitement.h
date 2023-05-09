@@ -5,6 +5,6 @@
 #include "Ultrasonic.h"
 #include "Arduino.h"
 
-void Evitement(Ultrasonic avant, Ultrasonic droite, Ultrasonic gauche, Ultrasonic arriere, BlocMoteurs* motors);
+void Evitement(Ultrasonic* capteurs, BlocMoteurs* motors);
 
 #endif

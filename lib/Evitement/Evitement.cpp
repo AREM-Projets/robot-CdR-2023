@@ -1,32 +1,31 @@
 #include "Evitement.h"
 
-#define limitecm 20
+#define LIMITE_CM 20
+#define NOMBRE_CAPTEURS 4
 
 
-void Evitement(Ultrasonic avant, Ultrasonic droite, Ultrasonic gauche, Ultrasonic arriere, BlocMoteurs* motors)
+void Evitement(Ultrasonic* capteurs, BlocMoteurs* motors)
 {
-    unsigned int distance[4] = {avant.read(), droite.read(), gauche.read(), arriere.read()};
-    int secu = 5;
+    unsigned int distance[4] = {capteurs[0].read(), capteurs[1].read(), capteurs[2].read(), capteurs[3].read()};
+    int secu;
     
     for(int i = 0; i<4; i++)
     {
-        if((distance[i] != 0) && (distance[i] < limitecm))
+        if((distance[i] != 0) && (distance[i] < LIMITE_CM))
         {
             motors->motors_stop_low_hiz(); //Arrête le robot
 
-            //Doit lire 20 fois une distance de proximité satisfaisante avant de redémarrer. 
+            //Doit lire 10 fois une distance de proximité satisfaisante avant de redémarrer. 
             //Si une valeur insatisfaisante est captée, le compteur redemarre.
-            while(secu < 10)
+            while(secu < 10*NOMBRE_CAPTEURS)
             {
-                
-                if((avant.read() < limitecm) && (droite.read() < limitecm) && (gauche.read() < limitecm) && (arriere.read() < limitecm))
+                secu = 0;
+                for(int j = 0; j < 4; j++)
                 {
-                    secu++;
-                }
-
-                else
-                {
-                    secu = 0;
+                    if(capteurs[j].read() < LIMITE_CM)
+                    {
+                        secu++;
+                    }
                 }
                 
             }
