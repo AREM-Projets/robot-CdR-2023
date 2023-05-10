@@ -9,9 +9,14 @@
 #include "Odometrie.h"
 #include "ControleurPID.h"
 #include "Evitement.h"
+#include "Trappe.h"
+
+#define servoPin D15
 
 Ultrasonic capteurs[4] = {(D1,D2), (D3,D4), (D5,D6), (D7,D8)};
 BlocMoteurs* motors;
+
+Servo myservo;
 
 // These define's must be placed at the beginning before #include "STM32TimerInterrupt.h"
 // _TIMERINTERRUPT_LOGLEVEL_ from 0 to 4
@@ -61,13 +66,6 @@ void setup()
 
   delay(100);
 
-  Serial.print(F("\nStarting TimerInterruptLEDDemo on ")); Serial.println(BOARD_NAME);
-  Serial.println(STM32_TIMER_INTERRUPT_VERSION);
-  Serial.print(F("CPU Frequency = ")); Serial.print(F_CPU / 1000000); Serial.println(F(" MHz"));
-
-  // Instantiate HardwareTimer object. Thanks to 'new' instanciation, HardwareTimer is not destructed when setup() function is finished.
-  //HardwareTimer *MyTim = new HardwareTimer(Instance);
-
   // configure pin in output/intput mode
   pinMode(D1, OUTPUT); //Trig
   pinMode(D2, INPUT); //Echo
@@ -78,14 +76,11 @@ void setup()
   pinMode(D7, OUTPUT); //Trig
   pinMode(D8, INPUT); //Echo
 
+  pinMode(D15, OUTPUT);
+  
+  // Attach the Servo variable to a pin:
+  myservo.attach(servoPin);
 
-  // Interval in microsecs
-  if (ITimer.attachInterruptInterval(HW_TIMER_INTERVAL_MS * 1000, TimerHandler))
-  {
-    Serial.print(F("Starting ITimer OK, millis() = ")); Serial.println(millis());
-  }
-  else
-    Serial.println(F("Can't set ITimer. Select another freq. or timer"));
 
   // Just to demonstrate, don't use too many ISR Timers if not absolutely necessary
   // You can use up to 16 timer for each ISR_Timer
@@ -95,5 +90,9 @@ void setup()
 
 void loop()
 {
+  myservo.write(10);
+  delay(4000);
 
+  myservo.write(160);
+  delay(4000);
 }
