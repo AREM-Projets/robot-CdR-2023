@@ -6,10 +6,10 @@
 
 void Evitement(Ultrasonic* capteurs, BlocMoteurs* motors)
 {
-    unsigned int distance[4] = {capteurs[0].read(), capteurs[1].read(), capteurs[2].read(), capteurs[3].read()};
+    unsigned int distance[NOMBRE_CAPTEURS] = {capteurs[0].read(), capteurs[1].read(), capteurs[2].read(), capteurs[3].read()};
     int secu;
     
-    for(int i = 0; i<4; i++)
+    for(int i = 0; i<NOMBRE_CAPTEURS; i++)
     {
         if((distance[i] != 0) && (distance[i] < LIMITE_CM))
         {
@@ -20,9 +20,9 @@ void Evitement(Ultrasonic* capteurs, BlocMoteurs* motors)
             while(secu < 10*NOMBRE_CAPTEURS)
             {
                 secu = 0;
-                for(int j = 0; j < 4; j++)
+                for(int j = 0; j < NOMBRE_CAPTEURS; j++)
                 {
-                    if(capteurs[j].read() < LIMITE_CM)
+                    if((capteurs[j].read() < LIMITE_CM) && (capteurs[j].read() != 0))
                     {
                         secu++;
                     }
