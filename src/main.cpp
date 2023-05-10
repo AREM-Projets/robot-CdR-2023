@@ -90,9 +90,9 @@ void setup()
 
 void loop()
 {
-  myservo.write(10);
+  ouvrir(myservo);
   delay(4000);
 
-  myservo.write(160);
+  fermer(myservo);
   delay(4000);
 }
