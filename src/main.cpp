@@ -7,6 +7,8 @@
 #include "MagneticEncodeurs.h"
 #include "Odometrie.h"
 #include "ControleurPID.h"
+#include "FileTaches.h"
+#include "DefileurTaches.h"
 
 SPIClass* dev_spi;
 BlocMoteurs* motors;
@@ -18,8 +20,11 @@ void setup()
     motors = new BlocMoteurs(dev_spi);
 
     motors->motors_on();
-    motors->commande_vitesses(0.5,0.5,0.5,0.5);
+    motors->avancer(1000);
     delay(1000);
+    motors->rotation_droite();
+    delay(1000);
+    motors->avancer(1000);
     motors->motors_stop_low_hiz();
 }
 

@@ -96,9 +96,6 @@ void BlocMoteurs::commande_vitesses(float vitesse_normalisee_FD, float vitesse_n
     set_vitesse_moteur_BD(vitesse_BD * pourcentMaxSpeed, sens_BD);
     x_nucleo_ihm02a1->perform_prepared_actions(1);
    
-
-
-
 }
 
 void BlocMoteurs::set_vitesse_moteur_FG(int vitesse, StepperMotor::direction_t dir)
@@ -139,8 +136,6 @@ void BlocMoteurs::set_vitesse_moteur_FD(int vitesse, StepperMotor::direction_t d
         motors[1]->prepare_hard_hiz(); // mode haute impédence pour pouvoir déplacer le robot à la main
     }
 
-    
-    
 }
 
 
@@ -161,7 +156,6 @@ void BlocMoteurs::set_vitesse_moteur_BG(int vitesse, StepperMotor::direction_t d
         motors[0]->prepare_hard_hiz(); // mode haute impédence pour pouvoir déplacer le robot à la main
     }
 
-    
 }
 
 void BlocMoteurs::set_vitesse_moteur_BD(int vitesse, StepperMotor::direction_t dir)
@@ -180,7 +174,6 @@ void BlocMoteurs::set_vitesse_moteur_BD(int vitesse, StepperMotor::direction_t d
     {
         motors[1]->prepare_hard_hiz(); // mode haute impédence pour pouvoir déplacer le robot à la main
     }
-
     
 }
 
@@ -222,8 +215,6 @@ void BlocMoteurs::motors_stop_hard_hiz() // coupe les moteurs et les rends libre
     motors[1]->prepare_hard_hiz();
     x_nucleo_ihm02a1->perform_prepared_actions(1);
 
-    
- 
     moteurs_arret = 1;
 }
 
@@ -238,12 +229,6 @@ void BlocMoteurs::motors_stop_low_hiz()
     motors[0]->prepare_run(StepperMotor::BWD, 0);
     motors[1]->prepare_run(StepperMotor::BWD, 0);
     x_nucleo_ihm02a1->perform_prepared_actions(1);
-
-   
-
-
-
-    
 
     moteurs_arret = 1;
 }
@@ -264,3 +249,57 @@ void BlocMoteurs::StepCeil()
     motors[1]->prepare_move(StepperMotor::BWD,1);
     x_nucleo_ihm02a1->perform_prepared_actions(1);
 }
+
+/* Ajouts 2023 : commande par distance */
+// Sens : >0 pour avancer, =< 0 pour reculer
+
+void BlocMoteurs::commande_distance(uint32_t distance_mm, int dir_FG, int dir_FD, int dir_BG, int dir_BD)
+{
+    /* Sens de rotation */
+    StepperMotor::direction_t sens_FG = dir_FG > 0 ? StepperMotor::BWD : StepperMotor::FWD;
+    StepperMotor::direction_t sens_FD = dir_FD > 0 ? StepperMotor::FWD : StepperMotor::BWD;
+    StepperMotor::direction_t sens_BG = dir_BG > 0 ? StepperMotor::BWD : StepperMotor::FWD;
+    StepperMotor::direction_t sens_BD = dir_BD > 0 ? StepperMotor::FWD : StepperMotor::BWD;
+
+    if (!moteurs_arret)
+    {
+        uint32_t nb_steps = (uint32_t) 100 * distance_mm / (PI * RAYON_ROUE);
+
+        motors[0]->prepare_move(sens_FG,nb_steps);
+        motors[1]->prepare_move(sens_FD,nb_steps);
+        x_nucleo_ihm02a1->perform_prepared_actions(0);
+        motors[0]->prepare_move(sens_BG,nb_steps);
+        motors[1]->prepare_move(sens_BD,nb_steps);
+        x_nucleo_ihm02a1->perform_prepared_actions(1);
+    }
+    else    
+    {
+        motors[1]->prepare_hard_hiz(); // mode haute impédence pour pouvoir déplacer le robot à la main
+    }
+}
+
+/* Default should be 3000 I think but AAAAAAAAAAAAAAA */
+void BlocMoteurs::setMaxSpeedMoteurs(int speed_pps)
+{
+    motors[0]->set_max_speed(speed_pps);
+    motors[1]->set_max_speed(speed_pps);
+}
+
+/* Avance... */
+void BlocMoteurs::avancer(uint32_t distance_mm)
+{
+    commande_distance(distance_mm, 1, 1, 1, 1);
+}
+
+/* Tourne de 90° vers la droite */
+void BlocMoteurs::rotation_droite()
+{
+    commande_distance(DISTANCE_ROTATION, -1, 1, -1, 1);
+}
+
+/* Tourne de 90° vers la gauche */
+void BlocMoteurs::rotation_gauche()
+{
+    commande_distance(DISTANCE_ROTATION, 1, -1, 1, -1);
+}
+

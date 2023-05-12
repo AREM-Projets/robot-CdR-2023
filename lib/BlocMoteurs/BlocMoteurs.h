@@ -8,6 +8,11 @@
 #include "SPI.h"
 #include "config.h"
 
+#define RAYON_ROUE 30 // Placeholder, a mesurer // en mm 
+
+#define DISTANCE_ROTATION 100 // distance effectuee par une roue lors d'une rotation, en mm (placeholder)
+
+
 class BlocMoteurs
 {
 	public:
@@ -33,6 +38,16 @@ class BlocMoteurs
 		void setPourcentMaxSpeed(double p_pourcentMaxSpeed);
 		int DefMicroStep(uint8_t stepmode);
 		void StepCeil();
+
+		/* Ajouts 2023 */
+		void BlocMoteurs::commande_distance(uint32_t distance_mm, int dir_FG, int dir_FD, int dir_BG, int dir_BD);
+
+		void BlocMoteurs::avancer(uint32_t distance_mm);
+		void BlocMoteurs::rotation_droite();
+		void BlocMoteurs::rotation_gauche();
+
+		void BlocMoteurs::setMaxSpeedMoteurs(int speed_ppm);
+
 
 	private:
 		// Methodes pour définir la tension affectée à chaque moteur

@@ -204,6 +204,7 @@ Odometrie::~Odometrie()
     delete encodeurs;
 }
 
+// Needs Encodeurs
 bool Odometrie::update(bool useMPU)
 {
     uint32_t date = micros();
