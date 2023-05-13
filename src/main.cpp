@@ -5,9 +5,6 @@
 #include "Ultrasonic.h"
 #include "config.h"
 #include "BlocMoteurs.h"
-#include "MagneticEncodeurs.h"
-#include "Odometrie.h"
-#include "ControleurPID.h"
 #include "Evitement.h"
 #include "Trappe.h"
 
