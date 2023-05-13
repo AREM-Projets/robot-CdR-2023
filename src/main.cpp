@@ -16,11 +16,29 @@ void setup()
     motors = new BlocMoteurs(dev_spi);
     mouvement = new Mouvement(motors);
 
-    mouvement->forward(100);
+    mouvement->forward(1000);
     delay(1000);
     mouvement->rotate(Droite);
     delay(1000);
-    mouvement->forward(100);
+    mouvement->forward(1000);
+    
+
+    // Ancienne version pour vérif
+    /*
+    motors->commande_vitesses(0.3, 0.3, 0.3, 0.3);
+    delay(1000);
+    motors->motors_stop_low_hiz();
+    delay(500);
+    motors->motors_on();
+    motors->commande_vitesses(0.3, -0.3, 0.3, -0.3);
+    delay(1300);
+    motors->motors_stop_low_hiz();
+    delay(500);
+    motors->motors_on();
+    motors->commande_vitesses(0.3, 0.3, 0.3, 0.3);
+    delay(1000);
+    motors->motors_stop_low_hiz();
+    */
 }
 
 void loop()

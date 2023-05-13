@@ -64,14 +64,14 @@ void Mouvement::rotate(SensRotation sens)
 {
     switch (sens)
     {
-        case Gauche:
+        case Droite:
             motors->motors_on();
             motors->commande_vitesses(0.5, -0.5, 0.5, -0.5);
             delay(DUREE_ROTATION);
             motors->motors_stop_low_hiz();
             break;
 
-        case Droite:
+        case Gauche:
             motors->motors_on();
             motors->commande_vitesses(-0.5, 0.5, -0.5, 0.5);
             delay(DUREE_ROTATION);
