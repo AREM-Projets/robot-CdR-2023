@@ -14,11 +14,11 @@ void setup()
     motors = new BlocMoteurs(dev_spi);
 
     motors->motors_on();
-    motors->avancer(1000);
+    motors->commande_vitesses(0.2, 0.2, 0.2, 0.2);
     delay(1000);
-    motors->rotation_droite();
+    motors->commande_vitesses(-0.2, -0.2, -0.2, -0.2);
     delay(1000);
-    motors->avancer(1000);
+    
     motors->motors_stop_low_hiz();
 }
 

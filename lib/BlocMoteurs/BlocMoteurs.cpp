@@ -68,10 +68,10 @@ void BlocMoteurs::commande_vitesses(float vitesse_normalisee_FD, float vitesse_n
     /////////////////////////////////////////////////////////////
 
     // Détermination du signe des vitesses (logique inversée entre les deux moteurs car placés symétriquement sur le robot et branchement identique)
-    StepperMotor::direction_t sens_FG = vitesse_normalisee_FG >= 0.0f ? StepperMotor::BWD : StepperMotor::FWD;
-    StepperMotor::direction_t sens_FD = vitesse_normalisee_FD >= 0.0f ? StepperMotor::FWD : StepperMotor::BWD;
-    StepperMotor::direction_t sens_BG = vitesse_normalisee_BG >= 0.0f ? StepperMotor::BWD : StepperMotor::FWD;
-    StepperMotor::direction_t sens_BD = vitesse_normalisee_BD >= 0.0f ? StepperMotor::FWD : StepperMotor::BWD;
+    StepperMotor::direction_t sens_FG = vitesse_normalisee_FG >= 0.0f ? StepperMotor::FWD : StepperMotor::BWD;
+    StepperMotor::direction_t sens_FD = vitesse_normalisee_FD >= 0.0f ? StepperMotor::BWD : StepperMotor::FWD;
+    StepperMotor::direction_t sens_BG = vitesse_normalisee_BG >= 0.0f ? StepperMotor::FWD : StepperMotor::BWD;
+    StepperMotor::direction_t sens_BD = vitesse_normalisee_BD >= 0.0f ? StepperMotor::BWD : StepperMotor::FWD;
 
 
     // Détermination des valeurs de vitesses réelles à envoyer au shield
