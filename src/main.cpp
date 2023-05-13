@@ -16,9 +16,13 @@ void setup()
     motors->motors_on();
     motors->commande_vitesses(0.2, 0.2, 0.2, 0.2);
     delay(1000);
-    motors->commande_vitesses(-0.2, -0.2, -0.2, -0.2);
+    
+    motors->commande_vitesses(-0.2, 0.2, -0.2, 0.2);
     delay(1000);
     
+    motors->commande_vitesses(0.2, 0.2, 0.2, 0.2);
+    delay(1000);
+
     motors->motors_stop_low_hiz();
 }
 

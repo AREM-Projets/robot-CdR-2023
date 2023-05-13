@@ -12,6 +12,11 @@
 
 #define DISTANCE_ROTATION 100 // distance effectuee par une roue lors d'une rotation, en mm (placeholder)
 
+enum ShieldMoteurs
+{
+	Front,
+	Back
+};
 
 class BlocMoteurs
 {
@@ -39,7 +44,7 @@ class BlocMoteurs
 		int DefMicroStep(uint8_t stepmode);
 		void StepCeil();
 
-		/* Ajouts 2023 */
+		/* Ajouts 2023 | Inutilisés pour le moment */
 		void commande_distance(uint32_t distance_mm, int dir_FG, int dir_FD, int dir_BG, int dir_BD);
 
 		void avancer(uint32_t distance_mm);
@@ -51,10 +56,8 @@ class BlocMoteurs
 
 	private:
 		// Methodes pour définir la tension affectée à chaque moteur
-		void set_vitesse_moteur_FG(int vitesse, StepperMotor::direction_t dir); //frontleft
-		void set_vitesse_moteur_FD(int vitesse, StepperMotor::direction_t dir); //frontright
-		void set_vitesse_moteur_BG(int vitesse, StepperMotor::direction_t dir); //backleft
-		void set_vitesse_moteur_BD(int vitesse, StepperMotor::direction_t dir); //backright
+		void set_vitesse_moteur_gauche(int vitesse, StepperMotor::direction_t dir);
+		void set_vitesse_moteur_droit(int vitesse, StepperMotor::direction_t dir);
 		
 		bool moteurs_arret;
 

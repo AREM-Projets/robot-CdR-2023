@@ -24,7 +24,7 @@ BlocMoteurs::BlocMoteurs(SPIClass* spiMotors)
     //dev_spi = new SPIClass(A4, PC_2 , D9); ://Test SPI2
 
 
-    x_nucleo_ihm02a1 = new XNucleoIHM02A1(&initShield[0], &initShield[1],&initShieldMot2[0],&initShieldMot2[1], A4, A3, A5, D5, D4, D7,  A2, D2 , dev_spi2);
+    x_nucleo_ihm02a1 = new XNucleoIHM02A1(&initShield[Front], &initShield[Back],&initShieldMot2[Front],&initShieldMot2[Back], A4, A3, A5, D5, D4, D7,  A2, D2 , dev_spi2);
     motors = x_nucleo_ihm02a1->get_components();
 
 
@@ -32,10 +32,10 @@ BlocMoteurs::BlocMoteurs(SPIClass* spiMotors)
 
     motors[0]->prepare_move(StepperMotor::FWD,1);
     motors[1]->prepare_move(StepperMotor::FWD,1);
-    x_nucleo_ihm02a1->perform_prepared_actions(0);
+    x_nucleo_ihm02a1->perform_prepared_actions(Front);
     motors[0]->prepare_move(StepperMotor::BWD,1);
     motors[1]->prepare_move(StepperMotor::BWD,1);
-    x_nucleo_ihm02a1->perform_prepared_actions(1);
+    x_nucleo_ihm02a1->perform_prepared_actions(Back);
     // motors_top[0]->prepare_move(StepperMotor::BWD,1);
     // motors_top[1]->prepare_move(StepperMotor::BWD,1);
     // x_nucleo_ihm02a1_2->perform_prepared_actions();
@@ -89,16 +89,16 @@ void BlocMoteurs::commande_vitesses(float vitesse_normalisee_FD, float vitesse_n
     /////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////
     
-    set_vitesse_moteur_FG(vitesse_FG * pourcentMaxSpeed, sens_FG);
-    set_vitesse_moteur_FD(vitesse_FD * pourcentMaxSpeed, sens_FD);
-    x_nucleo_ihm02a1->perform_prepared_actions(0);
-    set_vitesse_moteur_BG(vitesse_BG * pourcentMaxSpeed, sens_BG);
-    set_vitesse_moteur_BD(vitesse_BD * pourcentMaxSpeed, sens_BD);
-    x_nucleo_ihm02a1->perform_prepared_actions(1);
+    set_vitesse_moteur_gauche(vitesse_FG * pourcentMaxSpeed, sens_FG);
+    set_vitesse_moteur_droit(vitesse_FD * pourcentMaxSpeed, sens_FD);
+    x_nucleo_ihm02a1->perform_prepared_actions(Front);
+    set_vitesse_moteur_gauche(vitesse_BG * pourcentMaxSpeed, sens_BG);
+    set_vitesse_moteur_droit(vitesse_BD * pourcentMaxSpeed, sens_BD);
+    x_nucleo_ihm02a1->perform_prepared_actions(Back);
    
 }
 
-void BlocMoteurs::set_vitesse_moteur_FG(int vitesse, StepperMotor::direction_t dir)
+void BlocMoteurs::set_vitesse_moteur_gauche(int vitesse, StepperMotor::direction_t dir)
 {
     // verification de la validité de la vitesse a envoyer
 
@@ -119,7 +119,7 @@ void BlocMoteurs::set_vitesse_moteur_FG(int vitesse, StepperMotor::direction_t d
 
 }
 
-void BlocMoteurs::set_vitesse_moteur_FD(int vitesse, StepperMotor::direction_t dir)
+void BlocMoteurs::set_vitesse_moteur_droit(int vitesse, StepperMotor::direction_t dir)
 {
     // verification de la validité de la vitesse a envoyer
     
@@ -136,45 +136,6 @@ void BlocMoteurs::set_vitesse_moteur_FD(int vitesse, StepperMotor::direction_t d
         motors[1]->prepare_hard_hiz(); // mode haute impédence pour pouvoir déplacer le robot à la main
     }
 
-}
-
-
-void BlocMoteurs::set_vitesse_moteur_BG(int vitesse, StepperMotor::direction_t dir)
-{
-    // verification de la validité de la vitesse a envoyer
-    
-    vitesse = abs(vitesse);
-    vitesse = min(vitesse, (int)MAX_VITESSE);
-    //vitesse = vitesse > 10 ? vitesse : 0;
-
-    if (!moteurs_arret)
-    {
-        motors[0]->prepare_run(dir, vitesse);
-    }
-    else
-    {
-        motors[0]->prepare_hard_hiz(); // mode haute impédence pour pouvoir déplacer le robot à la main
-    }
-
-}
-
-void BlocMoteurs::set_vitesse_moteur_BD(int vitesse, StepperMotor::direction_t dir)
-{
-    // verification de la validité de la vitesse a envoyer
-    
-    vitesse = abs(vitesse);
-    vitesse = min(vitesse, (int)MAX_VITESSE);
-    //vitesse = vitesse > 10 ? vitesse : 0;
-
-    if (!moteurs_arret)
-    {
-        motors[1]->prepare_run(dir, vitesse);
-    }
-    else    
-    {
-        motors[1]->prepare_hard_hiz(); // mode haute impédence pour pouvoir déplacer le robot à la main
-    }
-    
 }
 
 int BlocMoteurs::DefMicroStep(uint8_t stepmode)
@@ -210,10 +171,10 @@ void BlocMoteurs::motors_stop_hard_hiz() // coupe les moteurs et les rends libre
     
     motors[0]->prepare_hard_hiz(); // mode haute impédence pour pouvoir déplacer le robot à la main
     motors[1]->prepare_hard_hiz();
-    x_nucleo_ihm02a1->perform_prepared_actions(0);
+    x_nucleo_ihm02a1->perform_prepared_actions(Front);
     motors[0]->prepare_hard_hiz(); // mode haute impédence pour pouvoir déplacer le robot à la main
     motors[1]->prepare_hard_hiz();
-    x_nucleo_ihm02a1->perform_prepared_actions(1);
+    x_nucleo_ihm02a1->perform_prepared_actions(Back);
 
     moteurs_arret = 1;
 }
@@ -244,10 +205,10 @@ void BlocMoteurs::StepCeil()
 {
     motors[0]->prepare_move(StepperMotor::FWD,1);
     motors[1]->prepare_move(StepperMotor::FWD,1);
-    x_nucleo_ihm02a1->perform_prepared_actions(0);
+    x_nucleo_ihm02a1->perform_prepared_actions(Front);
     motors[0]->prepare_move(StepperMotor::BWD,1);
     motors[1]->prepare_move(StepperMotor::BWD,1);
-    x_nucleo_ihm02a1->perform_prepared_actions(1);
+    x_nucleo_ihm02a1->perform_prepared_actions(Back);
 }
 
 /* Ajouts 2023 : commande par distance */
@@ -267,10 +228,10 @@ void BlocMoteurs::commande_distance(uint32_t distance_mm, int dir_FG, int dir_FD
 
         motors[0]->prepare_move(sens_FG,nb_steps);
         motors[1]->prepare_move(sens_FD,nb_steps);
-        x_nucleo_ihm02a1->perform_prepared_actions(0);
+        x_nucleo_ihm02a1->perform_prepared_actions(Front);
         motors[0]->prepare_move(sens_BG,nb_steps);
         motors[1]->prepare_move(sens_BD,nb_steps);
-        x_nucleo_ihm02a1->perform_prepared_actions(1);
+        x_nucleo_ihm02a1->perform_prepared_actions(Back);
     }
     else    
     {
