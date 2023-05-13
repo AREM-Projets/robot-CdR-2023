@@ -4,12 +4,6 @@
 
 #include "config.h"
 #include "BlocMoteurs.h"
-#include "MagneticEncodeurs.h"
-#include "Odometrie.h"
-#include "ControleurPID.h"
-#include "FileTaches.h"
-#include "DefileurTaches.h"
-
 SPIClass* dev_spi;
 BlocMoteurs* motors;
 

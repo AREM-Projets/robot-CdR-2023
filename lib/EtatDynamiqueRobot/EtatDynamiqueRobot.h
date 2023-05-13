@@ -7,42 +7,38 @@
  **/
 
 #include <Arduino.h>
+#include "BlocMoteurs.h"
 
 #define MEAN_SAMPLES 35
+
+/* Tourner à droite : ++ et à gauche : -- (toujours % 4)*/
+enum Orientation 
+{
+    X_pos,
+    Y_pos,
+    X_neg,
+    Y_neg
+};
+
 
 class EtatDynamiqueRobot
 {
     public:
-        EtatDynamiqueRobot(double x, double y, double theta);
 
-        // Pour passer vers un nouvel etat
-        // Effectue le calcul des nouvelles vitesses
-        void versPosition(double n_x, double n_y, double n_theta, uint32_t dt);
-        void setPosition(double n_x, double n_y, double n_theta);
-        void translatePosition(double n_x, double n_y, double n_theta);
+        EtatDynamiqueRobot(BlocMoteurs moteurs);
 
-        double getThetaRadian() const;
+        
+       
+        double getOrientation() const;
         double getX() const;
         double getY() const;
-        double getV() const;
-        double getVTheta() const;
-        double getVX() const;
-        double getVY() const;
-
-        double deltaAngleTo(double initial, double target) const;
 
     private:
-        double x;
-        double y;
-        double theta;
-        
-        double v_xy;
-        double v_theta;
+        double x_mm;
+        double y_mm;
+        Orientation orientation;
 
-        double v_x;
-        double v_y;
-
-        uint32_t last_dt;
+        // uint32_t last_dt;
 };
 
 #endif

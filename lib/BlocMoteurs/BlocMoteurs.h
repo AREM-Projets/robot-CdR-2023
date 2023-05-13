@@ -40,13 +40,13 @@ class BlocMoteurs
 		void StepCeil();
 
 		/* Ajouts 2023 */
-		void BlocMoteurs::commande_distance(uint32_t distance_mm, int dir_FG, int dir_FD, int dir_BG, int dir_BD);
+		void commande_distance(uint32_t distance_mm, int dir_FG, int dir_FD, int dir_BG, int dir_BD);
 
-		void BlocMoteurs::avancer(uint32_t distance_mm);
-		void BlocMoteurs::rotation_droite();
-		void BlocMoteurs::rotation_gauche();
+		void avancer(uint32_t distance_mm);
+		void rotation_droite();
+		void rotation_gauche();
 
-		void BlocMoteurs::setMaxSpeedMoteurs(int speed_ppm);
+		void setMaxSpeedMoteurs(int speed_ppm);
 
 
 	private:
