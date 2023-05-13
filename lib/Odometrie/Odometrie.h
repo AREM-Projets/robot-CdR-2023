@@ -5,19 +5,19 @@
 #include "Arduino.h"
 
 /* Incrémenter l'orientation correspond à tourner de 90° vers la droite */
-enum Orientation
-{
-    X_pos, // Orientation de base
-    Y_pos,
-    X_neg,
-    Y_neg
-};
+    enum Orientation
+    {
+        X_pos, // Orientation de base
+        Y_pos,
+        X_neg,
+        Y_neg
+    };
 
-enum SensRotation
-{
-    Gauche,
-    Droite
-};
+    enum SensRotation
+    {
+        Gauche,
+        Droite
+    };
 
 struct Objectif
 {

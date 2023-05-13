@@ -4,28 +4,26 @@
 
 #include "config.h"
 #include "BlocMoteurs.h"
+#include "Mouvement.h"
 SPIClass* dev_spi;
 BlocMoteurs* motors;
+Mouvement* mouvement;
 
 void setup()
 {
     dev_spi = new SPIClass(D11, D12, D13);
     dev_spi->begin();
     motors = new BlocMoteurs(dev_spi);
+    mouvement = new Mouvement(motors);
 
-    motors->motors_on();
-    motors->commande_vitesses(0.2, 0.2, 0.2, 0.2);
+    mouvement->forward(100);
     delay(1000);
-    
-    motors->commande_vitesses(-0.2, 0.2, -0.2, 0.2);
+    mouvement->rotate(Droite);
     delay(1000);
-    
-    motors->commande_vitesses(0.2, 0.2, 0.2, 0.2);
-    delay(1000);
-
-    motors->motors_stop_low_hiz();
+    mouvement->forward(100);
 }
 
 void loop()
 {
+
 }
