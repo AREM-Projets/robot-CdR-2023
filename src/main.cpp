@@ -84,11 +84,11 @@ void setup()
 
     /* Init Leds */
     leds = new Leds(A3);
-    leds->startTimer(5000);
+    leds->startTimer(95000); // start 95s timer
     leds->Off();
-    delay(1000);
-    leds->On();
-    delay(1000);
+    //delay(1000);
+    //leds->On();
+    //delay(1000);
     // leds->Off();
 
     /* Tests mouvement */
