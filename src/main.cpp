@@ -6,17 +6,21 @@
 #include "config.h"
 #include "BlocMoteurs.h"
 #include "Mouvement.h"
-SPIClass* dev_spi;
 #include "Evitement.h"
 #include "Trappe.h"
 
 #define servoPin D15
 
 Ultrasonic capteurs[4] = {(D1,D2), (D3,D4), (D5,D6), (D7,D8)};
+
+SPIClass* dev_spi;
 BlocMoteurs* motors;
 Mouvement* mouvement;
 
 Servo myservo;
+
+/* ---Zone Interrupt--- */
+/*
 
 // These define's must be placed at the beginning before #include "STM32TimerInterrupt.h"
 // _TIMERINTERRUPT_LOGLEVEL_ from 0 to 4
@@ -58,69 +62,77 @@ void doingSomething()
   Evitement(capteurs, motors);
 }
 
+*/
+
 
 void setup()
 {
+    /* Init mouvement */
     dev_spi = new SPIClass(D11, D12, D13);
     dev_spi->begin();
     motors = new BlocMoteurs(dev_spi);
     mouvement = new Mouvement(motors);
 
+    /* Tests mouvement */
     mouvement->deplacement(Avancer, 1000);
     delay(1000);
     mouvement->rotate(Droite);
     delay(1000);
     mouvement->deplacement(Avancer, 1000);
-    
 
-    // Ancienne version pour vérif
+    /* Ancienne version des tests moteurs pour vérif */
     /*
-    motors->commande_vitesses(0.3, 0.3, 0.3, 0.3);
+    motors->commande_vitesses(0.3, 0.3, 0.3, 0.3); // avancer
     delay(1000);
     motors->motors_stop_low_hiz();
     delay(500);
     motors->motors_on();
-    motors->commande_vitesses(0.3, -0.3, 0.3, -0.3);
-    delay(1300);
+    motors->commande_vitesses(0.3, -0.3, 0.3, -0.3); // tourner à droite
+    delay(1500);
     motors->motors_stop_low_hiz();
     delay(500);
     motors->motors_on();
-    motors->commande_vitesses(0.3, 0.3, 0.3, 0.3);
+    motors->commande_vitesses(0.3, 0.3, 0.3, 0.3); // avancer
     delay(1000);
     motors->motors_stop_low_hiz();
     */
-  Serial.begin(115200);
-  while (!Serial);
 
-  delay(100);
+    /* Init serial */
+    Serial.begin(115200);
+    while (!Serial);
 
-  // configure pin in output/intput mode
-  pinMode(D1, OUTPUT); //Trig
-  pinMode(D2, INPUT); //Echo
-  pinMode(D3, OUTPUT); //Trig
-  pinMode(D4, INPUT); //Echo
-  pinMode(D5, OUTPUT); //Trig
-  pinMode(D6, INPUT); //Echo
-  pinMode(D7, OUTPUT); //Trig
-  pinMode(D8, INPUT); //Echo
+    delay(100);
 
-  pinMode(D15, OUTPUT);
-  
-  // Attach the Servo variable to a pin:
-  myservo.attach(servoPin);
+    // configure pin in output/intput mode for Ultrasonic
+    pinMode(D1, OUTPUT); //Trig
+    pinMode(D2, INPUT); //Echo
+    pinMode(D3, OUTPUT); //Trig
+    pinMode(D4, INPUT); //Echo
+    pinMode(D5, OUTPUT); //Trig
+    pinMode(D6, INPUT); //Echo
+    pinMode(D7, OUTPUT); //Trig
+    pinMode(D8, INPUT); //Echo
 
+    pinMode(D15, OUTPUT);
+    
+    // Attach the Servo variable to a pin:
+    myservo.attach(servoPin);
 
-  // Just to demonstrate, don't use too many ISR Timers if not absolutely necessary
-  // You can use up to 16 timer for each ISR_Timer
-  ISR_Timer.setInterval(TIMER_INTERVAL_0_1S,  doingSomething);
+    /* Interrupts */
+    /*
+    // Just to demonstrate, don't use too many ISR Timers if not absolutely necessary
+    // You can use up to 16 timer for each ISR_Timer
+    ISR_Timer.setInterval(TIMER_INTERVAL_0_1S,  doingSomething);
+    */
 }
 
 
 void loop()
 {
-  ouvrir(myservo);
-  delay(4000);
+    /* Test servo */
+    ouvrir(myservo);
+    delay(4000);
 
-  fermer(myservo);
-  delay(4000);
+    fermer(myservo);
+    delay(4000);
 }
