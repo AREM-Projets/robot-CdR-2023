@@ -31,30 +31,17 @@ enum SensRotation
     Droite
 };
 
-struct PositionRobot
-{
-    double x;
-    double y;
-    Orientation orientation;
-};
-
 class Mouvement
 {
     public:
         Mouvement(BlocMoteurs* _moteurs);
         ~Mouvement();
 
-        void step_forward(); // step : Avancer de QUANTUM_DISTANCE
-
         void Mouvement::deplacement(SensDeplacement sens, double distance/*unit?*/);
         void rotate(SensRotation sens);
 
-        
-
     private:
-
         BlocMoteurs* motors;
-        PositionRobot position;
 
         double temp_measure; // for simple methods like forward...
 
