@@ -45,14 +45,20 @@ void Mouvement::step_forward()
 }
 
 // Fait avancer le robot... For testing purposes.
-void Mouvement::forward(double distance/*unit?*/)
+void Mouvement::deplacement(SensDeplacement sens, double distance/*unit?*/)
 {
+    int signe;
     temp_measure = 0;
+    if(sens == Avancer)
+        signe = 1;
+    else
+        signe = -1;
+
     
     while(temp_measure < distance)
     {
         motors->motors_on();
-        motors->commande_vitesses(VITESSE, VITESSE, VITESSE, VITESSE);
+        motors->commande_vitesses(signe*VITESSE, signe*VITESSE, signe*VITESSE, signe*VITESSE);
         delay(QUANTUM_TEMPS);
         motors->motors_stop_low_hiz();
         temp_measure += QUANTUM_DIST;
@@ -80,18 +86,4 @@ void Mouvement::rotate(SensRotation sens)
     }
 }
 
-void Mouvement::faceDirection(Orientation new_orientation)
-{
-    // nombre de directions et sens (positif vers la droite = sens horaire)
-    int nb_rotations = new_orientation - position.orientation;
-    SensRotation dir;
-    if(nb_rotations > 0)
-        dir = Droite;
-    else
-        dir = Gauche;
 
-    for(int i = 0; i<nb_rotations; i++)
-    {
-        rotate(Droite);
-    }
-}

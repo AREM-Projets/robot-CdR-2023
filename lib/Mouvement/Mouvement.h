@@ -19,6 +19,12 @@ enum Orientation
     Y_neg
 };
 
+enum SensDeplacement
+{
+    Reculer,
+    Avancer
+};
+
 enum SensRotation
 {
     Gauche,
@@ -38,10 +44,12 @@ class Mouvement
         Mouvement(BlocMoteurs* _moteurs);
         ~Mouvement();
 
-        void forward(double distance/*unit?*/);
+        void step_forward(); // step : Avancer de QUANTUM_DISTANCE
+
+        void Mouvement::deplacement(SensDeplacement sens, double distance/*unit?*/);
         void rotate(SensRotation sens);
 
-        void faceDirection(Orientation orientation);
+        
 
     private:
 
@@ -50,7 +58,7 @@ class Mouvement
 
         double temp_measure; // for simple methods like forward...
 
-        void step_forward();
+        
 
 };
 

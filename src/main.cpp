@@ -16,11 +16,11 @@ void setup()
     motors = new BlocMoteurs(dev_spi);
     mouvement = new Mouvement(motors);
 
-    mouvement->forward(1000);
+    mouvement->deplacement(Avancer, 1000);
     delay(1000);
     mouvement->rotate(Droite);
     delay(1000);
-    mouvement->forward(1000);
+    mouvement->deplacement(Avancer, 1000);
     
 
     // Ancienne version pour vérif

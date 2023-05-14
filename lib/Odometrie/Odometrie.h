@@ -3,21 +3,7 @@
 
 #include "vector"
 #include "Arduino.h"
-
-/* Incrémenter l'orientation correspond à tourner de 90° vers la droite */
-    enum Orientation
-    {
-        X_pos, // Orientation de base
-        Y_pos,
-        X_neg,
-        Y_neg
-    };
-
-    enum SensRotation
-    {
-        Gauche,
-        Droite
-    };
+#include "Mouvement.h"
 
 struct Objectif
 {
@@ -32,20 +18,26 @@ struct PositionRobot
     double y;
     Orientation orientation;
 };
-/*
+
 class Odometrie
 {
     public:
-        Trajet();
+        Odometrie(Mouvement* _mouvement);
+
         void addObjectif(Objectif objectif);
         bool estVide() const;
 
 
     private:
+
+        void faceDirection(Orientation orientation);
+
+        Mouvement* mouvement;
+
         PositionRobot position;
         std::vector<Objectif> objectifs;
   
 };
-*/
+
 
 #endif
