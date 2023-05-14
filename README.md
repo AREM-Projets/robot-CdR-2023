@@ -3,7 +3,7 @@ Code du robot d'AREM de la Coupe de France de Robotique 2023
 
 # Ajout de code
 
-La branche *main* est utilisée uniquement pour les ajouts et modifications du code final.  
+La branche *main* est utilisée uniquement pour les ajouts et modifications destinées au code final.  
 
 Pour faire des tests, créer une branche dédiée au test, et la laisser pour que tout le monde puisse effectuer les mêmes tests.
 
