@@ -46,7 +46,7 @@ class Mouvement
 
         void step_forward(); // step : Avancer de QUANTUM_DISTANCE
 
-        void Mouvement::deplacement(SensDeplacement sens, double distance/*unit?*/);
+        void deplacement(SensDeplacement sens, double distance/*unit?*/);
         void rotate(SensRotation sens);
 
         
