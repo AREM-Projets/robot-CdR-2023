@@ -21,12 +21,10 @@ void Trajet::deplacementBase(SensDeplacement sens)
         signe = 1;
     else 
         signe = -1;
+    // On se déplacce
+    mouvement->mouvementElementaire(signe);
 
-    motors->motors_on();
-    motors->commande_vitesses(signe * VITESSE, signe * VITESSE, signe * VITESSE, signe * VITESSE);
-    delay(QUANTUM_TEMPS);
-    motors->motors_stop_low_hiz();
-    // sous réserve de définition (ajouter orientation dans la même classe) :
+    // On modifie la position
     switch (position.orientation)
     {
         case X_pos:
@@ -48,8 +46,9 @@ void Trajet::deplacementBase(SensDeplacement sens)
 }
 
 // void Trajet::addLigne(SensDeplacement sens, double distance)
-    
-void Trajet::faceDirection(Orientation new_orientation)
+
+// Face the specified direction   
+void Trajet::setOrientation(Orientation new_orientation)
 {
     // nombre de rotations vers la droite nécessaires
     int nb_rotations = (new_orientation - position.orientation) % 4;
@@ -82,23 +81,66 @@ void Trajet::faceDirection(Orientation new_orientation)
     position.orientation = new_orientation;
 }
 
-
-
-
-
-void goToXvalue(double x)
+// Le robot se positionne dans le bon sens, puis avance/recule jusqu'à la position voulue
+void Trajet::goToXvalue(double x, SensDeplacement sens)
 {
+    // direction du mouvement : vers les X_pos ou X_neg -> signe du résultat
+    double direction = x - position.x;
 
+    // On se place sur la bonne orientation
+    if(direction >= 0 && sens == Avancer)
+        setOrientation(X_pos);
+    else if(direction <= 0 && sens == Avancer)
+        setOrientation(X_neg);
+    else if(direction > 0 && sens == Reculer)
+        setOrientation(X_pos);
+    else
+        setOrientation(X_neg);
+
+    // On se déplace tant qu'on a pas atteint la position voulue (à ERREUR_MAX près)
+    while(fabs(x - position.x) > ERREUR_MAX)
+        deplacementBase(sens);
 }
-        void goToYvalue(double y);
-        void goToObjective(Objectif objectif);
-        void returnToBase(); // go to (0,0) facing x_pos
 
+// Le robot se positionne dans le bon sens, puis avance/recule jusqu'à la position voulue
+void Trajet::goToYvalue(double y, SensDeplacement sens)
+{
+    // direction du mouvement : vers les Y_pos ou Y_neg -> signe du résultat
+    double direction = y - position.y;
 
+    // On se place sur la bonne orientation
+    if(direction >= 0 && sens == Avancer)
+        setOrientation(Y_pos);
+    else if(direction <= 0 && sens == Avancer)
+        setOrientation(Y_neg);
+    else if(direction > 0 && sens == Reculer)
+        setOrientation(Y_pos);
+    else
+        setOrientation(Y_neg);
 
+    // On se déplace tant qu'on a pas atteint la position voulue (à ERREUR_MAX près)
+    while(fabs(y - position.y) > ERREUR_MAX)
+        deplacementBase(sens);
+}
 
+void Trajet::goToObjective(Objectif objectif)
+{
+    goToXvalue(objectif.x, Avancer);
+    goToYvalue(objectif.y, Avancer);
+    setOrientation(objectif.orientation);
+}
 
+// go to (0,0), face X_pos
+void Trajet::returnToBase()
+{
+    Objectif objectif;
 
+    objectif.x = 0;
+    objectif.y = 0;
+    objectif.orientation = X_pos;
+
+    goToObjective(objectif);
+}
 
 double Trajet::getX()
 {

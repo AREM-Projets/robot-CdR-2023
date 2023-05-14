@@ -33,6 +33,15 @@ void Mouvement::deplacement(SensDeplacement sens, double distance/*unit?*/)
     }
 }
 
+
+void Mouvement::mouvementElementaire(int signe)
+{
+    motors->motors_on();
+    motors->commande_vitesses(signe*VITESSE, signe*VITESSE, signe*VITESSE, signe*VITESSE);
+    delay(QUANTUM_TEMPS);
+    motors->motors_stop_low_hiz();
+}
+
 // Rotation dans la direction précisée.
 void Mouvement::rotate(SensRotation sens)
 {

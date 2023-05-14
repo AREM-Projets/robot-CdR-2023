@@ -5,7 +5,7 @@
 #include "Mouvement.h"
 
 /* Erreur max sur un déplacement, doit être >= QUANTUM_DIST */
-#define ERREUR_MAX QUANTUM_DIST
+#define ERREUR_MAX QUANTUM_DIST*1.1
 
 /* Délai automatique après une action, en ms */
 #define AUTOMATIC_DELAY 100
@@ -41,11 +41,11 @@ class Trajet
         ~Trajet();
 
         // void addLigne(SensDeplacement sens, double distance) ; // 
-        void faceDirection(Orientation new_orientation); // rotation sur place
+        void setOrientation(Orientation new_orientation); // rotation sur place
         
 
-        void goToXvalue(double x);
-        void goToYvalue(double y);
+        void goToXvalue(double x, SensDeplacement sens);
+        void goToYvalue(double y, SensDeplacement sens);
         void goToObjective(Objectif objectif);
         void returnToBase(); // go to (0,0) facing x_pos
 

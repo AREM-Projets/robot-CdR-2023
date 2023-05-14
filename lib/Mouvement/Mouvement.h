@@ -11,14 +11,6 @@
 
 // Enumération des variables d'état
 
-enum Orientation
-{
-    X_pos,
-    Y_pos,
-    X_neg,
-    Y_neg
-};
-
 enum SensDeplacement
 {
     Reculer,
@@ -31,16 +23,21 @@ enum SensRotation
     Droite
 };
 
+// Classe mouvement pour des déplacements de base
 class Mouvement
 {
     public:
         Mouvement(BlocMoteurs* _moteurs);
         ~Mouvement();
 
-        void Mouvement::deplacement(SensDeplacement sens, double distance/*unit?*/);
+        void deplacement(SensDeplacement sens, double distance/*unit?*/);
         void rotate(SensRotation sens);
 
+        // signe = 1 pour avancer et -1 pour reculer
+        void mouvementElementaire(int signe);
+
     private:
+
         BlocMoteurs* motors;
 
         double temp_measure; // for simple methods like forward...
