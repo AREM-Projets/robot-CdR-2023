@@ -156,7 +156,7 @@ void loop()
     delay(4000);
     */
 
-    /* Test Leds */
+    /* Leds */
     leds->timerEndTest();
     
 }
