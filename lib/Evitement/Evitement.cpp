@@ -14,14 +14,16 @@ ReseauCapteur::ReseauCapteur(Ultrasonic pinAvant1, Ultrasonic pinAvant2, Ultraso
 
 void ReseauCapteur::EvitementTranslation(int signe, BlocMoteurs motors)
 {
-    switch (signe)
+    switch (signe) //Choix d'avant ou arriere
     {
     case 1:
-        if (((Avant1.read() < LIMITE_CM) && (Avant1.read() != 0)) || ((Avant2.read() < LIMITE_CM) && (Avant2.read() != 0))) 
+        
+        if (((Avant1.read() < LIMITE_CM) && (Avant1.read() != 0)) || ((Avant2.read() < LIMITE_CM) && (Avant2.read() != 0)))
         {
+            //Si l'un des deux capteurs detecte un obstacle à moins de 20cm, le robot s'arrête 
             motors.motors_stop_low_hiz();
 
-            int secu = 0;
+            int secu = 0; //Verifie si le robot abverse s'est éloigné en vérifiant VERIF fois.
             while(secu < VERIF)
             {
                 if (((Avant1.read() > LIMITE_CM) && (Avant1.read() != 0)) || ((Avant2.read() > LIMITE_CM) && (Avant2.read() != 0)))
@@ -34,12 +36,12 @@ void ReseauCapteur::EvitementTranslation(int signe, BlocMoteurs motors)
                 }
             }
 
-            motors.motors_on();
+            motors.motors_on(); //Rallume le moteur
         }
 
         break;
     
-    case -1:        
+    case -1: //Idem pour l'arriere   
         if (((Arriere1.read() < LIMITE_CM) && (Arriere1.read() != 0)) || ((Arriere2.read() < LIMITE_CM) && (Arriere2.read() != 0))) 
         {
             motors.motors_stop_low_hiz();
@@ -64,7 +66,7 @@ void ReseauCapteur::EvitementTranslation(int signe, BlocMoteurs motors)
     }
 }
 
-void ReseauCapteur::EvitementRotation(int signe, BlocMoteurs motors)
+void ReseauCapteur::EvitementRotation(int signe, BlocMoteurs motors) //Fonctionne de la même manière pour les rotations
 {
     switch (signe)
     {
