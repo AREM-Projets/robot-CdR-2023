@@ -8,6 +8,7 @@
 #include "Mouvement.h"
 #include "Evitement.h"
 #include "Trappe.h"
+#include "Trajet.h"
 
 #include "Leds.h"
 
@@ -18,6 +19,7 @@ Ultrasonic capteurs[4] = {(D1,D2), (D3,D4), (D5,D6), (D7,D8)};
 SPIClass* dev_spi;
 BlocMoteurs* motors;
 Mouvement* mouvement;
+Trajet* trajet;
 Leds* leds;
 
 Servo myservo;
@@ -64,7 +66,6 @@ void doingSomething()
 {
   Evitement(capteurs, motors);
 }
-
 */
 
 
@@ -76,6 +77,7 @@ void setup()
     dev_spi->begin();
     motors = new BlocMoteurs(dev_spi);
     mouvement = new Mouvement(motors);
+    trajet = new Trajet(mouvement);
     */
 
     /* Init serial */
@@ -117,6 +119,13 @@ void setup()
     motors->motors_stop_low_hiz();
     */
 
+    /* Test Trajet */
+    trajet->setOrientation(Y_neg);
+    trajet->setOrientation(Y_pos);
+    trajet->goToXvalue(1000, Avancer);
+    trajet->goToYvalue(500, Reculer);
+    trajet->printPosition();
+    trajet->returnToBase();
     
 
     delay(100);
