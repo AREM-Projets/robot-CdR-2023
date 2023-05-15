@@ -3,13 +3,7 @@
 // Constantes à modifier selon le test robot
 
 #include "BlocMoteurs.h"
-
-#define QUANTUM_TEMPS   100      // pas temporel des roues
-#define QUANTUM_DIST    100      // pas spatial des roues
-#define DUREE_ROTATION  1000    // explicite
-#define VITESSE 0.3 // Vitesse des déplacements (avancer/reculer), entre 0 et 1.
-
-// Enumération des variables d'état
+#include "config.h"
 
 enum Orientation
 {
