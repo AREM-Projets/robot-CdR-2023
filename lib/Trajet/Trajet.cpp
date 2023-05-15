@@ -186,6 +186,10 @@ void Trajet::printPosition()
             case Y_neg:
                 Serial.println("Negative y");
                 break;   
+
+            default:
+                Serial.println("Feur");
+                break;
         }
     }
 }
