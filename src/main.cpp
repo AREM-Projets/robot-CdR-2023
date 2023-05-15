@@ -10,6 +10,8 @@
 #include "Trappe.h"
 #include "Trajet.h"
 
+#include "Leds.h"
+
 #define servoPin D15
 
 Ultrasonic capteurs[4] = {(D1,D2), (D3,D4), (D5,D6), (D7,D8)};
@@ -18,6 +20,7 @@ SPIClass* dev_spi;
 BlocMoteurs* motors;
 Mouvement* mouvement;
 Trajet* trajet;
+Leds* leds;
 
 Servo myservo;
 
@@ -69,22 +72,35 @@ void doingSomething()
 void setup()
 {
     /* Init mouvement */
+    /*
     dev_spi = new SPIClass(D11, D12, D13);
     dev_spi->begin();
     motors = new BlocMoteurs(dev_spi);
     mouvement = new Mouvement(motors);
     trajet = new Trajet(mouvement);
+    */
 
     /* Init serial */
     Serial.begin(115200);
     while (!Serial);
 
+    /* Init Leds */
+    leds = new Leds(A3);
+    leds->startTimer(95000); // start 95s timer
+    leds->Off();
+    //delay(1000);
+    //leds->On();
+    //delay(1000);
+    // leds->Off();
+
     /* Tests mouvement */
+    /*
     mouvement->deplacement(Avancer, 1000);
     delay(1000);
     mouvement->rotate(Droite);
     delay(1000);
     mouvement->deplacement(Avancer, 1000);
+    */
 
     /* Ancienne version des tests moteurs pour vérif */
     /*
@@ -110,7 +126,6 @@ void setup()
     trajet->goToYvalue(500, Reculer);
     trajet->printPosition();
     trajet->returnToBase();
-
     
 
     delay(100);
@@ -142,9 +157,15 @@ void setup()
 void loop()
 {
     /* Test servo */
+    /*
     ouvrir(myservo);
     delay(4000);
 
     fermer(myservo);
     delay(4000);
+    */
+
+    /* Leds */
+    leds->timerEndTest();
+    
 }

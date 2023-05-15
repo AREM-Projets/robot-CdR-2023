@@ -30,6 +30,8 @@ class Mouvement
         Mouvement(BlocMoteurs* _moteurs);
         ~Mouvement();
 
+        void step_forward(); // step : Avancer de QUANTUM_DISTANCE
+
         void deplacement(SensDeplacement sens, double distance/*unit?*/);
         void rotate(SensRotation sens);
 
