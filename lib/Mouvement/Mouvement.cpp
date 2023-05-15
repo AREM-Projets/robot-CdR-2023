@@ -5,6 +5,12 @@ Mouvement::Mouvement(BlocMoteurs* moteurs)
 {
     // set motors to the specified motor
     motors = moteurs;
+
+    /* Debug print */
+    if(Serial)
+    {
+        Serial.println("Mouvement initialised");
+    }
 }
 
 Mouvement::~Mouvement()

@@ -40,7 +40,11 @@ BlocMoteurs::BlocMoteurs(SPIClass* spiMotors)
     // motors_top[1]->prepare_move(StepperMotor::BWD,1);
     // x_nucleo_ihm02a1_2->perform_prepared_actions();
 
-
+    /* Debug print */
+    if(Serial)
+    {
+        Serial.println("BlocMoteurs initialised");
+    }
 
 }
 
