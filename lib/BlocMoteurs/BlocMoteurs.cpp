@@ -75,10 +75,10 @@ void BlocMoteurs::commande_vitesses(float vitesse_normalisee_FD, float vitesse_n
 
 
     // Détermination des valeurs de vitesses réelles à envoyer au shield
-    int vitesse_FG = abs(vitesse_normalisee_FG * COEF_FG) * MAX_VITESSE;
-    int vitesse_FD = abs(vitesse_normalisee_FD * COEF_FD) * MAX_VITESSE;
-    int vitesse_BG = abs(vitesse_normalisee_BG * COEF_BG) * MAX_VITESSE;
-    int vitesse_BD = abs(vitesse_normalisee_BD * COEF_BD) * MAX_VITESSE;
+    int vitesse_FG = abs(vitesse_normalisee_FG * COEF_FL) * MAX_VITESSE;
+    int vitesse_FD = abs(vitesse_normalisee_FD * COEF_FR) * MAX_VITESSE;
+    int vitesse_BG = abs(vitesse_normalisee_BG * COEF_BL) * MAX_VITESSE;
+    int vitesse_BD = abs(vitesse_normalisee_BD * COEF_BR) * MAX_VITESSE;
 
     /////////////////////////////////////////////////////////////
     // Au cas où le shield a un comportement indésirable lorsque les vitesses 
