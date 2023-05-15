@@ -9,16 +9,22 @@
 #include "Evitement.h"
 #include "Trappe.h"
 #include "ActionneurAvant.h"
+#include "Leds.h"
 
 #define servoPin D1
 #define nm_PIN_Horaire A1 
 #define nm_PIN_Trigo A2
+
+
+#define servoPin D15
+
 
 Ultrasonic capteurs[4] = {(D1,D2), (D3,D4), (D5,D6), (D7,D8)};
 
 SPIClass* dev_spi;
 BlocMoteurs* motors;
 Mouvement* mouvement;
+Leds* leds;
 
 Servo myservo;
 
@@ -71,17 +77,34 @@ void doingSomething()
 void setup()
 {
     /* Init mouvement */
+    /*
     dev_spi = new SPIClass(D11, D12, D13);
     dev_spi->begin();
     motors = new BlocMoteurs(dev_spi);
     mouvement = new Mouvement(motors);
+    */
+
+    /* Init serial */
+    Serial.begin(115200);
+    while (!Serial);
+
+    /* Init Leds */
+    leds = new Leds(A3);
+    leds->startTimer(95000); // start 95s timer
+    leds->Off();
+    //delay(1000);
+    //leds->On();
+    //delay(1000);
+    // leds->Off();
 
     /* Tests mouvement */
+    /*
     mouvement->deplacement(Avancer, 1000);
     delay(1000);
     mouvement->rotate(Droite);
     delay(1000);
     mouvement->deplacement(Avancer, 1000);
+    */
 
     /* Ancienne version des tests moteurs pour vérif */
     /*
@@ -100,9 +123,7 @@ void setup()
     motors->motors_stop_low_hiz();
     */
 
-    /* Init serial */
-    Serial.begin(115200);
-    while (!Serial);
+    
 
     delay(100);
 
@@ -133,9 +154,15 @@ void setup()
 void loop()
 {
     /* Test servo */
+    /*
     ouvrir(myservo);
     delay(4000);
 
     fermer(myservo);
     delay(4000);
+    */
+
+    /* Leds */
+    leds->timerEndTest();
+    
 }
