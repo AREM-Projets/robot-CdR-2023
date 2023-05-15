@@ -22,8 +22,6 @@ void Trajet::deplacementBase(SensDeplacement sens)
     else 
         signe = -1;
 
-    
-
     // On se déplace
     mouvement->mouvementElementaire(signe);
 

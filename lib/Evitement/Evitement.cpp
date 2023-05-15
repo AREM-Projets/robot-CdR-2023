@@ -93,7 +93,7 @@ void ReseauCapteur::EvitementRotation(int signe, BlocMoteurs motors) //Fonctionn
 
         break;
     
-    case -1:        
+    case -1: //da facking same
         if ((Droite.read() < LIMITE_CM) && (Droite.read() != 0))
         {
             motors.motors_stop_low_hiz();

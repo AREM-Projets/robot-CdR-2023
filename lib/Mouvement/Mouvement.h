@@ -3,6 +3,7 @@
 // Constantes à modifier selon le test robot
 
 #include "BlocMoteurs.h"
+#include "Evitement.h"
 
 #define QUANTUM_TEMPS   100      // pas temporel des roues
 #define QUANTUM_DIST    100      // pas spatial des roues
@@ -27,7 +28,7 @@ enum SensRotation
 class Mouvement
 {
     public:
-        Mouvement(BlocMoteurs* _moteurs);
+        Mouvement(BlocMoteurs* _moteurs, ReseauCapteur ResCapteurs);
         ~Mouvement();
 
         void step_forward(); // step : Avancer de QUANTUM_DISTANCE
@@ -39,9 +40,8 @@ class Mouvement
         void mouvementElementaire(int signe);
 
     private:
-
         BlocMoteurs* motors;
-
+        ReseauCapteur capteurs;
         double temp_measure; // for simple methods like forward...
 
         
