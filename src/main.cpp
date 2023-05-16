@@ -11,15 +11,13 @@
 #include "ActionneurAvant.h"
 #include "Trajet.h"
 #include "Leds.h"
-
-Ultrasonic capteurs[4] = {(D1,D2), (D3,D4), (D5,D6), (D7,D8)};
+#include "Calibration.h"
 
 SPIClass* dev_spi;
 BlocMoteurs* motors;
 Mouvement* mouvement;
 Trajet* trajet;
 Leds* leds;
-
 Servo myservo;
 
 /* ---Zone Interrupt--- */
@@ -128,20 +126,37 @@ void setup()
 
     delay(100);
 
-    // configure pin in output/intput mode for Ultrasonic
-    pinMode(D1, OUTPUT); //Trig
-    pinMode(D2, INPUT); //Echo
-    pinMode(D3, OUTPUT); //Trig
-    pinMode(D4, INPUT); //Echo
-    pinMode(D5, OUTPUT); //Trig
-    pinMode(D6, INPUT); //Echo
-    pinMode(D7, OUTPUT); //Trig
-    pinMode(D8, INPUT); //Echo
+    // configure pin 
+    pinMode(pinUltrasonFLE, OUTPUT);
+    pinMode(pinUltrasonFLT, INPUT);
 
-    pinMode(D15, OUTPUT);
+    pinMode(pinServoPanier, OUTPUT);
+
+    pinMode(pinUltrasonFRE, INPUT);
+    pinMode(pinUltrasonFRT, OUTPUT);
+
+    pinMode(pinUltrasonRE, INPUT);
+    pinMode(pinUltrasonRT, OUTPUT);
+
+    pinMode(pinUltrasonLE, INPUT); 
+    pinMode(pinUltrasonLT, OUTPUT);
+
+    pinMode(pinUltrasonBLE, INPUT); 
+    pinMode(pinUltrasonBLT, OUTPUT);
+
+    pinMode(pinUltrasonBRE, INPUT); 
+    pinMode(pinUltrasonBRT, OUTPUT);
+
+    pinMode(pinTeamSelector, INPUT);
+    
+    pinMode(pinHacheur1, OUTPUT);
+    pinMode(pinHacheur2, OUTPUT);
+
+    pinMode(pinStarter, INPUT);
+    pinMode(pinLeds, OUTPUT);
     
     // Attach the Servo variable to a pin:
-    myservo.attach(servoPin);
+    myservo.attach(pinServoPanier);
 
     /* Interrupts */
     /*

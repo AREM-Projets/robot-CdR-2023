@@ -4,6 +4,7 @@
 
 #include "BlocMoteurs.h"
 #include "config.h"
+#include "ReseauCapteur.h"
 
 enum SensDeplacement
 {
@@ -33,12 +34,12 @@ class Mouvement
         void mouvementElementaire(int signe);
 
     private:
+  
         BlocMoteurs* motors;
         ReseauCapteur* capteurs;
         double temp_measure; // for simple methods like forward...
 
-        
-
+       
 };
 
 #endif
