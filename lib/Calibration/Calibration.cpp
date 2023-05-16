@@ -104,5 +104,5 @@ void Calibration::test_global(Servo myservo)
 
     Serial.println("Test Capteur Ultrasons");
     
-
+    
 }
