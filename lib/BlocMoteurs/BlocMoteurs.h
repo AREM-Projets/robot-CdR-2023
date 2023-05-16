@@ -8,10 +8,6 @@
 #include "SPI.h"
 #include "config.h"
 
-#define RAYON_ROUE 30 // Placeholder, a mesurer // en mm 
-
-#define DISTANCE_ROTATION 100 // distance effectuee par une roue lors d'une rotation, en mm (placeholder)
-
 enum ShieldMoteurs
 {
 	Front,

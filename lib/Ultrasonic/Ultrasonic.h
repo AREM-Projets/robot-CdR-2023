@@ -20,11 +20,12 @@
 #ifndef Ultrasonic_h
 #define Ultrasonic_h
 
+#include "config.h"
 /*
- * Values of divisors
- */
+ * Values of divisors (defined in ../config.h)
 #define CM 28
 #define INC 71
+*/
 
 class Ultrasonic {
   public:

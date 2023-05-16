@@ -6,6 +6,7 @@
 #include "Arduino.h"
 #include "Mouvement.h"
 #include "Trajet.h"
+#include "config.h"
 
 struct PositionRobot
 {
