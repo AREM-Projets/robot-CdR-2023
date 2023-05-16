@@ -1,23 +1,4 @@
-/*
- * Ultrasonic.cpp
- *
- * Library for Ultrasonic Ranging Module in a minimalist way
- *
- * created 3 Apr 2014
- * by Erick Simões (github: @ErickSimoes | twitter: @AloErickSimoes)
- * modified 23 Jan 2017
- * by Erick Simões (github: @ErickSimoes | twitter: @AloErickSimoes)
- * modified 04 Mar 2017
- * by Erick Simões (github: @ErickSimoes | twitter: @AloErickSimoes)
- * modified 15 May 2017
- * by Eliot Lim    (github: @eliotlim)
- * modified 10 Jun 2018
- * by Erick Simões (github: @ErickSimoes | twitter: @AloErickSimoes)
- * modified 14 Jun 2018
- * by Otacilio Maia (github: @OtacilioN | linkedIn: in/otacilio)
- *
- * Released into the MIT License.
- */
+//Version modifié de la librairie Ultrasonic.h trouvable facilement sur l'Internet
 
 #if ARDUINO >= 100
   #include <Arduino.h>
@@ -34,7 +15,9 @@ Ultrasonic::Ultrasonic(uint8_t trigPin, uint8_t echoPin, unsigned long timeOut) 
   pinMode(trig, OUTPUT);
   pinMode(echo, INPUT);
   timeout = timeOut;
-}
+
+  //mesureEnCours = 0; //Ajout personnel, la mesure ne pouvant être en cours dès la construction
+  }
 
 unsigned int Ultrasonic::timing() {
   if (threePins)
@@ -73,3 +56,32 @@ unsigned int Ultrasonic::read(uint8_t und) {
 unsigned int Ultrasonic::distanceRead(uint8_t und) {
   return read(und);
 }
+
+/*
+void Ultrasonic::Emission()
+{
+  if (!mesureEnCours)
+  {
+    digitalWrite(trig, LOW);
+    delayMicroseconds(2);
+    digitalWrite(trig, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(trig, LOW);
+    mesureEnCours = 1;
+  }
+}
+
+unsigned int Ultrasonic::Reception()
+{
+  if (!mesureEnCours)
+  {
+    previousMicros = micros();
+    while(!digitalRead(echo) && (micros() - previousMicros) <= timeout); // wait for the echo pin HIGH or timeout
+    previousMicros = micros();
+    while(digitalRead(echo)  && (micros() - previousMicros) <= timeout); // wait for the echo pin LOW or timeout
+
+    mesureEnCours = 0;
+    return micros() - previousMicros; // duration
+  }
+}
+*/

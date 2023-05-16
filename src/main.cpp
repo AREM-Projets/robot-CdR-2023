@@ -6,7 +6,7 @@
 #include "config.h"
 #include "BlocMoteurs.h"
 #include "Mouvement.h"
-#include "Evitement.h"
+#include "ReseauCapteur.h"
 #include "Trappe.h"
 #include "ActionneurAvant.h"
 #include "Trajet.h"

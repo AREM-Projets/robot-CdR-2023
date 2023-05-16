@@ -35,6 +35,13 @@ class Ultrasonic {
     unsigned int distanceRead(uint8_t und = CM) __attribute__ ((deprecated ("This method is deprecated, use read() instead.")));
     void setTimeout(unsigned long timeOut) {timeout = timeOut;}
 
+    /*
+    //homemade :)
+    int mesureEnCours; //Variable pour savoir si une impulsion a été envoyé
+    void Ultrasonic::Emission();
+    unsigned int Ultrasonic::Reception();
+    */
+
   private:
     uint8_t trig;
     uint8_t echo;
@@ -45,3 +52,4 @@ class Ultrasonic {
 };
 
 #endif // Ultrasonic_h
+ 

@@ -1,10 +1,11 @@
 #include "Mouvement.h"
 
 
-Mouvement::Mouvement(BlocMoteurs* moteurs)
+Mouvement::Mouvement(BlocMoteurs* moteurs, ReseauCapteur* ResCapteurs)
 {
     // set motors to the specified motor
     motors = moteurs;
+    capteurs = ResCapteurs;
 
     /* Debug print */
     if(Serial)
@@ -32,8 +33,10 @@ void Mouvement::deplacement(SensDeplacement sens, double distance/*unit?*/)
     while(temp_measure < distance)
     {
         motors->motors_on();
+        int time = millis();
         motors->commande_vitesses(signe*VITESSE, signe*VITESSE, signe*VITESSE, signe*VITESSE);
-        delay(QUANTUM_TEMPS);
+        //delay(QUANTUM_TEMPS);
+        capteurs->EvitementTranslation(signe, motors);
         motors->motors_stop_low_hiz();
         temp_measure += QUANTUM_DIST;
     }
