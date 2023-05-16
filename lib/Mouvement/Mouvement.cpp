@@ -17,6 +17,7 @@ Mouvement::~Mouvement()
 void Mouvement::deplacement(SensDeplacement sens, double distance/*unit?*/)
 {
     int signe;
+    int tempsAttente;
     temp_measure = 0;
     if(sens == Avancer)
         signe = 1;
@@ -28,9 +29,13 @@ void Mouvement::deplacement(SensDeplacement sens, double distance/*unit?*/)
     {
         motors->motors_on();
         int time = millis();
-        motors->commande_vitesses(signe*VITESSE, signe*VITESSE, signe*VITESSE, signe*VITESSE);
-        //delay(QUANTUM_TEMPS);
-        capteurs->EvitementTranslation(signe, motors);
+        motors->commande_vitesses(signe*VITESSE, signe*VITESSE, signe*VITESSE, signe*VITESSE); //Bouge
+        capteurs->EvitementTranslation(signe, motors); //Regarde autour de lui pour reperer un robot adverse
+        tempsAttente = (QUANTUM_TEMPS - (millis() - time)); //Attend QUANTUM_TEMPS moins le temps de la mesure
+        if(tempsAttente > 0)
+        {
+            delay(tempsAttente); //N'attends que si l'on s'est arrêté moins de QUANTUM_TEMPS
+        }
         motors->motors_stop_low_hiz();
         temp_measure += QUANTUM_DIST;
     }

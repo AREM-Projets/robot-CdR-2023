@@ -36,7 +36,6 @@ void ReseauCapteur::EvitementTranslation(int signe, BlocMoteurs* motors)
                 }
             }
 
-            motors->motors_on(); //Rallume le moteur
         }
 
         break;
@@ -59,7 +58,7 @@ void ReseauCapteur::EvitementTranslation(int signe, BlocMoteurs* motors)
                 }
             }
 
-            motors->motors_on();
+            
         }
 
         break;
@@ -88,7 +87,7 @@ void ReseauCapteur::EvitementRotation(int signe, BlocMoteurs* motors) //Fonction
                 }
             }
 
-            motors->motors_on();
+            
         }
 
         break;
@@ -111,7 +110,7 @@ void ReseauCapteur::EvitementRotation(int signe, BlocMoteurs* motors) //Fonction
                 }
             }
 
-            motors->motors_on();
+            
         }
 
         break;
