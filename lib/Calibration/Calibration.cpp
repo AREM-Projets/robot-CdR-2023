@@ -8,7 +8,6 @@ Calibration::Calibration(Mouvement* mouvement)
 Calibration::~Calibration()
 {
     delete mouvement;
-    delete moteurs;
 }
 
 void Calibration::test_rotations() 
@@ -89,7 +88,7 @@ void Calibration::test_carre()
     delay(AUTOMATIC_DELAY);
 }
 
-void Calibration::test_global(Servo myservo, ReseauCapteur capteurs)
+void Calibration::test_global(Servo myservo, ActionneurAvant actionneur, Leds led)
 {
     Serial.println("Test Rotations");
     test_rotations();
@@ -97,24 +96,31 @@ void Calibration::test_global(Servo myservo, ReseauCapteur capteurs)
     Serial.println("Test Carre");
     test_carre();
 
-    Serial.println("Test trappe");
+    Serial.println("Test Trappe");
     ouvrir(myservo);
     delay(4000);
     fermer(myservo);
 
     Serial.println("Test Capteur Ultrasons");
     Serial.print("Avant1 : ");
-    Serial.println(capteurs.Avant1.read());
+    Serial.println(mouvement->capteurs->Avant1.read());
     Serial.print("Avant2 : ");
-    Serial.println(capteurs.Avant2.read());
+    Serial.println(mouvement->capteurs->Avant2.read());
     Serial.print("Gauche : ");
-    Serial.println(capteurs.Gauche.read());
+    Serial.println(mouvement->capteurs->Gauche.read());
     Serial.print("Droite : ");
-    Serial.println(capteurs.Droite.read());
+    Serial.println(mouvement->capteurs->Droite.read());
     Serial.print("Arriere1 : ");
-    Serial.println(capteurs.Arriere1.read());
+    Serial.println(mouvement->capteurs->Arriere1.read());
     Serial.print("Arriere2 : ");
-    Serial.println(capteurs.Arriere2.read());
+    Serial.println(mouvement->capteurs->Arriere2.read());
 
+    Serial.println("Test ActionneurAvant");
+    actionneur.serrer();
+    actionneur.deserrer();
+
+    Serial.println("Leds");
+    led.On();
+    led.Off();
 
 }

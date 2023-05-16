@@ -25,10 +25,8 @@ class Calibration
         void test_deplacements();
         void test_carre();
 
-        void test_global(Servo myservo, ReseauCapteur capteurs);
-
-    private:
-        BlocMoteurs* moteurs;
+        void test_global(Servo myservo, ActionneurAvant actionneur, Leds led);
+        
         Mouvement* mouvement;
 };
 
