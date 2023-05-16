@@ -89,7 +89,7 @@ void Calibration::test_carre()
     delay(AUTOMATIC_DELAY);
 }
 
-void Calibration::test_global(Servo myservo)
+void Calibration::test_global(Servo myservo, ReseauCapteur capteurs)
 {
     Serial.println("Test Rotations");
     test_rotations();
@@ -103,6 +103,18 @@ void Calibration::test_global(Servo myservo)
     fermer(myservo);
 
     Serial.println("Test Capteur Ultrasons");
-    
-    
+    Serial.print("Avant1 : ");
+    Serial.println(capteurs.Avant1.read());
+    Serial.print("Avant2 : ");
+    Serial.println(capteurs.Avant2.read());
+    Serial.print("Gauche : ");
+    Serial.println(capteurs.Gauche.read());
+    Serial.print("Droite : ");
+    Serial.println(capteurs.Droite.read());
+    Serial.print("Arriere1 : ");
+    Serial.println(capteurs.Arriere1.read());
+    Serial.print("Arriere2 : ");
+    Serial.println(capteurs.Arriere2.read());
+
+
 }

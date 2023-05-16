@@ -25,7 +25,7 @@ class Calibration
         void test_deplacements();
         void test_carre();
 
-        void test_global(Servo myservo);
+        void test_global(Servo myservo, ReseauCapteur capteurs);
 
     private:
         BlocMoteurs* moteurs;
