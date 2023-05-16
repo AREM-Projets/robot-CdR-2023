@@ -1,7 +1,7 @@
 #include "Mouvement.h"
-#include "Evitement.h"
 
-Mouvement::Mouvement(BlocMoteurs* moteurs, ReseauCapteur ResCapteurs)
+
+Mouvement::Mouvement(BlocMoteurs* moteurs, ReseauCapteur* ResCapteurs)
 {
     // set motors to the specified motor
     motors = moteurs;
@@ -30,7 +30,7 @@ void Mouvement::deplacement(SensDeplacement sens, double distance/*unit?*/)
         int time = millis();
         motors->commande_vitesses(signe*VITESSE, signe*VITESSE, signe*VITESSE, signe*VITESSE);
         //delay(QUANTUM_TEMPS);
-        capteurs.EvitementTranslation(signe, *motors);
+        capteurs->EvitementTranslation(signe, motors);
         motors->motors_stop_low_hiz();
         temp_measure += QUANTUM_DIST;
     }
