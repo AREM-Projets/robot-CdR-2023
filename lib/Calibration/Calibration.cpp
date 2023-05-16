@@ -103,7 +103,7 @@ void Calibration::test_global(Servo myservo, ActionneurAvant actionneur, Leds le
 
     Serial.println("Test Capteur Ultrasons");
     Serial.print("Avant1 : ");
-    Serial.println(mouvement->capteurs->Avant1.read());
+    Serial.println(mouvement->capteurs->Avant1.read()); //Lis juste le capteur
     Serial.print("Avant2 : ");
     Serial.println(mouvement->capteurs->Avant2.read());
     Serial.print("Gauche : ");
