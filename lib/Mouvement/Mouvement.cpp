@@ -1,20 +1,15 @@
 #include "Mouvement.h"
 
-
 Mouvement::Mouvement(BlocMoteurs* moteurs, ReseauCapteur* ResCapteurs)
 {
     // set motors to the specified motor
     motors = moteurs;
-<<<<<<< HEAD
-    capteurs = ResCapteurs;
-=======
 
     /* Debug print */
     if(Serial)
     {
         Serial.println("Mouvement initialised");
     }
->>>>>>> 678a0c455cbdc3c076445d7874dd5afab277a222
 }
 
 Mouvement::~Mouvement()

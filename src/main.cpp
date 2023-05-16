@@ -12,17 +12,6 @@
 #include "Trajet.h"
 #include "Leds.h"
 
-<<<<<<< HEAD
-
-#define servoPin D1
-#define nm_PIN_Horaire A1 
-#define nm_PIN_Trigo A2
-
-
-#define servoPin D15
-
-=======
->>>>>>> 678a0c455cbdc3c076445d7874dd5afab277a222
 Ultrasonic capteurs[4] = {(D1,D2), (D3,D4), (D5,D6), (D7,D8)};
 
 SPIClass* dev_spi;

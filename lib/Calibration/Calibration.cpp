@@ -89,3 +89,15 @@ void Calibration::test_carre()
     mouvement->deplacement(Avancer, 1000);
     delay(AUTOMATIC_DELAY);
 }
+
+void Calibration::test_global()
+{
+    Serial.println("Test Rotations");
+    test_rotations();
+
+    Serial.println("Test Carre");
+    test_carre();
+
+    Serial.println("Test Carre");
+    test_carre();
+}
