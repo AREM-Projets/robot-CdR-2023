@@ -127,6 +127,6 @@
 #define pinTeamSelector D15     // Pin du switch de sélection de l'équipe (câble jaune clair sur le PCB) --> à souder
 
 #define pinHacheur1 A0          // Pin "INT1" du hacheur du MCC de l'actionneur presse palais (câble bleu sur le PCB)
-#define pinHacheur1 A1          // Pin "INT2" du hacheur du MCC de l'actionneur presse palais (câble jaune sur le PCB)
+#define pinHacheur2 A1          // Pin "INT2" du hacheur du MCC de l'actionneur presse palais (câble jaune sur le PCB)
 #define pinStarter A2           // Pin du machin sur lequel on tire pour lancer le programme du robot au début d'un match (câble rouge sur le PCB)
 #define pinLeds A3              // Pin de l'alimentation des LEDs (en analogique parce que y'avait plus de pins digitales) (câble rouge sur le PCB)

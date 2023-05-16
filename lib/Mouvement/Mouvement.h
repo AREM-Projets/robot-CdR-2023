@@ -3,8 +3,8 @@
 // Constantes à modifier selon le test robot
 
 #include "BlocMoteurs.h"
-#include "ReseauCapteur.h"
 #include "config.h"
+#include "ReseauCapteur.h"
 
 enum SensDeplacement
 {

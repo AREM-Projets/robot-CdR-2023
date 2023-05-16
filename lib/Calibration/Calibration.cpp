@@ -1,9 +1,8 @@
 #include "Calibration.h"
 
-Calibration::Calibration(BlocMoteurs* motors)
+Calibration::Calibration(Mouvement* mouvement)
 {
-    moteurs = motors;
-    mouvement = new Mouvement(moteurs);
+    mouvement = mouvement;
 }
 
 Calibration::~Calibration()
@@ -90,7 +89,7 @@ void Calibration::test_carre()
     delay(AUTOMATIC_DELAY);
 }
 
-void Calibration::test_global()
+void Calibration::test_global(Servo myservo)
 {
     Serial.println("Test Rotations");
     test_rotations();
@@ -98,6 +97,12 @@ void Calibration::test_global()
     Serial.println("Test Carre");
     test_carre();
 
-    Serial.println("Test Carre");
-    test_carre();
+    Serial.println("Test trappe");
+    ouvrir(myservo);
+    delay(4000);
+    fermer(myservo);
+
+    Serial.println("Test Capteur Ultrasons");
+    
+
 }
