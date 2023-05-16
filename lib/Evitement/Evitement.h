@@ -9,8 +9,8 @@ class ReseauCapteur
 {
 public:
     ReseauCapteur(Ultrasonic Avant1, Ultrasonic Avant2, Ultrasonic Arriere1, Ultrasonic Arriere2, Ultrasonic Gauche, Ultrasonic Droite);
-    void EvitementTranslation(int signe, BlocMoteurs motors);
-    void EvitementRotation(int signe, BlocMoteurs motors);
+    void EvitementTranslation(int signe, BlocMoteurs* motors);
+    void EvitementRotation(int signe, BlocMoteurs* motors);
 
 private:
     Ultrasonic Avant1;
