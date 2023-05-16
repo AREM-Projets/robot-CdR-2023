@@ -35,7 +35,6 @@ void ReseauCapteur::EvitementTranslation(int signe, BlocMoteurs* motors)
                     secu = 0;
                 }
             }
-
         }
 
         break;
@@ -58,7 +57,6 @@ void ReseauCapteur::EvitementTranslation(int signe, BlocMoteurs* motors)
                 }
             }
 
-            
         }
 
         break;
@@ -86,8 +84,6 @@ void ReseauCapteur::EvitementRotation(int signe, BlocMoteurs* motors) //Fonction
                     secu = 0;
                 }
             }
-
-            
         }
 
         break;
@@ -109,8 +105,6 @@ void ReseauCapteur::EvitementRotation(int signe, BlocMoteurs* motors) //Fonction
                     secu = 0;
                 }
             }
-
-            
         }
 
         break;

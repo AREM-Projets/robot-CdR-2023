@@ -4,6 +4,7 @@ Mouvement::Mouvement(BlocMoteurs* moteurs, ReseauCapteur* ResCapteurs)
 {
     // set motors to the specified motor
     motors = moteurs;
+    capteurs = ResCapteurs;
 
     /* Debug print */
     if(Serial)
