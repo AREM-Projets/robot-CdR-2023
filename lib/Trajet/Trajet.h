@@ -3,12 +3,7 @@
 
 #include "Arduino.h"
 #include "Mouvement.h"
-
-/* Erreur max sur un déplacement, doit être >= QUANTUM_DIST */
-#define ERREUR_MAX QUANTUM_DIST*1.1
-
-/* Délai automatique après une action, en ms */
-#define AUTOMATIC_DELAY 100
+#include "config.h"
 
 /* Incrémenter l'orientation correspond à tourner de 90° vers la droite */
 enum Orientation

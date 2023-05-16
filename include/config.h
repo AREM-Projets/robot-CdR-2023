@@ -2,103 +2,131 @@
 
 #include <math.h>
 
-/* 2023 : paramètres à changer au fur et à mesure des tests*/
+// --- //
+// Actionneur Avant (Vis pour faire pression sur les gâteaux)
+// --- //
 
-// La periode de l'asser
-#define DELTA_T_ASSER_us 10000.0
-#define MAXOSC 100
-#define NOTRE_ROBOT
+/* Temps de vissage pour passer de la position haute à la position basse [en ms] */
+#define TEMPS_VISSAGE 5000 // /!\ PLACEHOLDER /!\ à mesurer
 
-// le perimetre de la roue divisé par le nombre de ticks par tour de l'encodeur magnétique
-#define DISTANCE_PAR_TICK_G 60.95 * PI / 4096 // mm
-#define DISTANCE_PAR_TICK_D 60.95 * PI / 4096 // mm
+// --- //
+// Bloc Moteurs
+// --- //
 
-// L'écart entre les roues motrices
-#define ECART_ROUES 261.5625//250.0 // mm
-
-// L'offset entre le tof et les roues lors de l'estimation de la position du robot avec les tofs
-#define DISTANCE_TOF_AVANT_ROUE 80.0 // mm
-
-// L'erreur de distance à l'objectif min pour considérer une ligne droite terminée
-#define ERROR_MIN_DIST 10 // mm
-// L'erreur d'angle à l'objectif min pour considérer une rotation terminée
-#define ERROR_MIN_ANGLE PI / 120 // rad
-
-// L'angle max du robot vers son objectif à partir duquel le robot décide de rotationner sur place avant de commencer le déplacement
-// hysteresis pour éviter les oscillations bizarre autour du seuil
-#define ANGLE_MAX_ROTATION_SEULE PI / 12.0
-#define ANGLE_MIN_ROTATION_SEULE PI / 120.0
-
-// Consigne de vitesse max envoyée au shield moteurs
+/* Consigne de vitesse max envoyée au shield moteurs (en pulse per second) */
 #define MAX_VITESSE 600.0
 
-#define ACCEL_MAX 10.0 // en mm/s²
+/* Rayon de la roue [en mm] */
+#define RAYON_ROUE 30 // /!\ PLACEHOLDER /!\ à mesurer
 
-//#define INIT_X 2750.0//1500
-//#define INIT_Y 1095.0
-//#define INIT_THETA PI/2.0
+/* Distance effectuee par une roue lors d'une rotation, [en mm] */
+#define DISTANCE_ROTATION 100 // /!\ PLACEHOLDER /!\ à mesurer
 
-// Les valeurs brutes correspondent à un départ, elles sont transformées en INIT_X/Y/THETA en fonction du coté
-#define RAW_INIT_X 0//2675.0
-#define RAW_INIT_Y 0//1320.0
-#define RAW_INIT_THETA 0///PI/2.0
+/* Coefficients de vitesses des moteurs pour faire une ligne droite */
+// Avant-gauche : FL, Avant-droite : FR, Arrière-gauche : BL, Arrière-droite : BR
+#define COEF_FL 1.0
+#define COEF_FR 1.0
+#define COEF_BL 1.0
+#define COEF_BR 1.0
 
-#ifndef BLEU
-    #define INIT_X RAW_INIT_X
-    #define INIT_Y RAW_INIT_Y
-    #define INIT_THETA RAW_INIT_THETA
-#else
-    #define INIT_X 3000.0 - RAW_INIT_X
-    #define INIT_Y RAW_INIT_Y
-    #define INIT_THETA PI - RAW_INIT_THETA
-#endif
+// --- //
+// Calibration mouvements
+// --- //
 
-// Des coefficients calculé pour faire environ une ligne droite sans asser
-#define COEF_FG 1.0
-#define COEF_FD 1.0
-#define COEF_BG 1.0
-#define COEF_BD 1.0
+/* Durée d'un déplacement élémentaire [en ms]*/
+#define QUANTUM_TEMPS           100      
 
-#define BRASPASCENTRE 0.0
+/* Distance parcourue par un déplacement élémentaire [en ??] */
+#define QUANTUM_DIST            100 // /!\ PLACEHOLDER /!\ à mesurer     
 
-// Coef pour calibrer les tofs utilisés pour la calibration
-#define COEF_TOF 1.0
+/* Durée d'une rotation de 90° vers la droite */
+#define DUREE_ROTATION_DROITE   1002
 
-#define MAX_ERREUR_DIST 200.0
-#define MAX_ERREUR_I 100.0
+/* Durée d'une rotation de 90° vers la gauche */
+#define DUREE_ROTATION_GAUCHE   1005
 
-#define MAX_CALI_TOFS_ANGLE 20.0
-#define MAX_CALI_TOFS_DIST 100.0
+/* Vitesse normalisée des moteurs pendant une rotation (entre 0 et 1) */
+#define VITESSE_ROTATION        0.4
 
-extern int timer_start_tirette;
+/* Vitesse normalisée des moteurs pendant un déplacement en ligne droite (entre 0 et 1) */
+#define VITESSE                 0.4
 
-extern volatile bool mpuInterrupt;  
+/* Délai entre deux déplacements */
+#define AUTOMATIC_DELAY         500
 
-extern void dmpDataReady();
+// --- //
+// Evitement
+// --- //
 
-extern bool dmpReady;
+// WIP
 
-extern bool strategie;
+// --- //
+// Leds
+// --- //
 
-#define LIDARNOTONSERIAL
+// Rien à define, juste le temps de timer est 90 000 ms
 
-#ifdef LIDARNOTONSERIAL
-#define safePrintSerial(x)  Serial.print(x)
+// --- //
+// Mouvement
+// --- //
 
+// Rien à define
 
+// --- //
+// Odometrie (à supprimer)
+// --- //
 
-#define safePrintSerialln(x) Serial.println(x)
-#else
-#define safePrintSerial(x)  
+// Rien à define
 
-#define safePrintSerialln(x)
-#endif
+// --- //
+// Trajet
+// --- //
 
-#define POSITION_X_CARRE0 667.5
-#define POSITION_Y_CARRE0 1600.0
-#define ECART2CARRES 185.0
-#define OFFSETFROMEDGELIDARDETECTION 100
-#define safeOffset 1000.0
-#define TIMEOUTCAMERA 1000000
+/* Erreur max sur un déplacement, doit être >= QUANTUM_DIST (défini dans la section Calibration Mouvement) */
+#define ERREUR_MAX QUANTUM_DIST*1.1
 
-#define SAFEGALLERIE
+/* Délai automatique après une action [en ms] */
+#define AUTOMATIC_DELAY 100
+
+// --- //
+// Trappe
+// --- //
+
+/* Commande du servomoteur pour mettre la trappe en position fermée */
+#define POS_FERME 10
+
+/* Commande du servomoteur pour mettre la trappe en position ouverte */
+#define POS_OUVERTE 160
+
+// --- //
+// Ultrasonics
+// --- //
+
+/* Diviseurs pour traduire les données du capteur à ultrason [en cm]*/
+#define CM 28
+#define INC 71
+
+// --- //
+// Pins
+// --- //
+
+#define pinUltrasonFLE D1       // Pin "Echo" du capteur à ultrason Avant Gauche (câble orange sur le PCB) (en fait c'est peut-être le droite) (FLE c'est pour Feurward Left Echo)
+#define pinUltrasonFLT D2       // Pin "Trig" du capteur à ultrason Avant Gauche (câble jaune sur le PCB)
+// La D3 est pas utilisable
+#define pinServoPanier D4       // Pin commandant le servomoteur du portail du panier orange (câble vert sur le PCB)
+#define pinUltrasonFRE D5       // Pin "Echo" du capteur à ultrason Avant Droite (câble orange sur le PCB) (en fait c'est peut-être le gauche)
+#define pinUltrasonFRT D6       // Pin "Trig" du capteur à ultrason Avant Droite (câble jaune sur le PCB)
+#define pinUltrasonRE D7        // Pin "Echo" du capteur à ultrason Droite (câble orange sur le PCB)
+#define pinUltrasonRT D8        // Pin "Trig" du capteur à ultrason Droite (câble vert sur le PCB)
+#define pinUltrasonLE D9        // Pin "Echo" du capteur à ultrason Gauche (câble jaune sur le PCB)
+#define pinUltrasonLT D10       // Pin "Trig" du capteur à ultrason Gauche (câble blanc sur le PCB)
+#define pinUltrasonBLE D11      // Pin "Echo" du capteur à ultrason Avant Gauche (câble gris sur le PCB) (en fait c'est peut-être le droite)
+#define pinUltrasonBLT D12      // Pin "Trig" du capteur à ultrason Avant Gauche (câble bleu sur le PCB)
+#define pinUltrasonBRE D13      // Pin "Echo" du capteur à ultrason Avant Droite (câble orange sur le PCB) (en fait c'est peut-être le gauche)
+#define pinUltrasonBRT D14      // Pin "Trig" du capteur à ultrason Avant Droite (câble rouge sur le PCB)
+#define pinTeamSelector D15     // Pin du switch de sélection de l'équipe (câble jaune clair sur le PCB) --> à souder
+
+#define pinHacheur1 A0          // Pin "INT1" du hacheur du MCC de l'actionneur presse palais (câble bleu sur le PCB)
+#define pinHacheur1 A1          // Pin "INT2" du hacheur du MCC de l'actionneur presse palais (câble jaune sur le PCB)
+#define pinStarter A2           // Pin du machin sur lequel on tire pour lancer le programme du robot au début d'un match (câble rouge sur le PCB)
+#define pinLeds A3              // Pin de l'alimentation des LEDs (en analogique parce que y'avait plus de pins digitales) (câble rouge sur le PCB)

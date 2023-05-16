@@ -2,8 +2,7 @@
 #define ACTIONNEURAVANT_H
 
 #include <Arduino.h>
-
-#define TEMPS_VISSAGE 5000
+#include "config.h"
 
 class ActionneurAvant
 {

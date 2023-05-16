@@ -5,7 +5,16 @@ Mouvement::Mouvement(BlocMoteurs* moteurs, ReseauCapteur* ResCapteurs)
 {
     // set motors to the specified motor
     motors = moteurs;
+<<<<<<< HEAD
     capteurs = ResCapteurs;
+=======
+
+    /* Debug print */
+    if(Serial)
+    {
+        Serial.println("Mouvement initialised");
+    }
+>>>>>>> 678a0c455cbdc3c076445d7874dd5afab277a222
 }
 
 Mouvement::~Mouvement()
@@ -58,14 +67,14 @@ void Mouvement::rotate(SensRotation sens)
         case Droite:
             motors->motors_on();
             motors->commande_vitesses(0.5, -0.5, 0.5, -0.5);
-            delay(DUREE_ROTATION);
+            delay(DUREE_ROTATION_DROITE);
             motors->motors_stop_low_hiz();
             break;
 
         case Gauche:
             motors->motors_on();
             motors->commande_vitesses(-0.5, 0.5, -0.5, 0.5);
-            delay(DUREE_ROTATION);
+            delay(DUREE_ROTATION_GAUCHE);
             motors->motors_stop_low_hiz();
             break;
     }

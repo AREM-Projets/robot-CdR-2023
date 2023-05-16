@@ -3,6 +3,7 @@
 // Constantes à modifier selon le test robot
 
 #include "BlocMoteurs.h"
+<<<<<<< HEAD
 #include "ReseauCapteur.h"
 
 #define QUANTUM_TEMPS   100      // pas temporel des roues
@@ -11,6 +12,9 @@
 #define VITESSE 0.3 // Vitesse des déplacements (avancer/reculer), entre 0 et 1.
 
 // Enumération des variables d'état
+=======
+#include "config.h"
+>>>>>>> 678a0c455cbdc3c076445d7874dd5afab277a222
 
 enum SensDeplacement
 {

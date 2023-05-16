@@ -1,8 +1,6 @@
 #ifndef LEDS_H
 #define LEDS_H
 
-
-
 #include "Arduino.h"
 
 class Leds
