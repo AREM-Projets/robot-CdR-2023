@@ -17,7 +17,7 @@ SPIClass* dev_spi;
 BlocMoteurs* motors;
 
 /* Leds */
-Leds* leds;
+// Leds* leds;
 
 
 /* Capteurs ultrasons */
@@ -37,6 +37,7 @@ Servo myservo;
 
 void setup()
 {
+
     /* Configure pins */ 
     pinMode(pinUltrasonFLE, OUTPUT);
     pinMode(pinUltrasonFLT, INPUT);
@@ -64,7 +65,8 @@ void setup()
     pinMode(pinHacheur2, OUTPUT);
 
     pinMode(pinStarter, INPUT);
-    pinMode(pinLeds, OUTPUT);
+    // pinMode(pinLeds, OUTPUT);
+
 
     /* Init moteurs */
     
@@ -89,16 +91,21 @@ void setup()
     /* Init serial */
     Serial.begin(115200);
     while (!Serial);
-    // delay(2000) // attendre que le terminal s'ouvre
+    delay(2000); // attendre que le terminal s'ouvre
 
     /* Init Leds */
-    leds = new Leds(A3);
+    /* leds = new Leds(A3);
     leds->startTimer(95000); // start 95s timer
     leds->Off();
-    // leds->On(); // pour tester l'allumage
+    // leds->On(); // pour tester l'allumage */
 
     /* Init servo */
     myservo.attach(pinServoPanier);
+
+    /* On attend le signal de start */
+    Serial.println("Robot initialised");
+    while(digitalRead(pinStarter) == 1); 
+    Serial.println("Match started !");
 
     /* Tests mouvement */
     /*
@@ -140,5 +147,5 @@ void loop()
     */
 
     /* Leds */
-    leds->timerEndTest();   
+    // leds->timerEndTest();   
 }
