@@ -1,7 +1,4 @@
 #include "ReseauCapteur.h"
-#include "BlocMoteurs.h"
-#include "Ultrasonic.h"
-#include "Arduino.h"
 
 ReseauCapteur::ReseauCapteur(Ultrasonic pinAvant1, Ultrasonic pinAvant2, Ultrasonic pinArriere1, Ultrasonic pinArriere2, Ultrasonic pinGauche, Ultrasonic pinDroite)
     : Avant1(pinAvant1), Avant2(pinAvant2), Arriere1(pinArriere1), Arriere2(pinArriere2), Gauche(pinGauche), Droite(pinDroite)
@@ -77,7 +74,7 @@ uint32_t ReseauCapteur::EvitementTranslation(int signe, BlocMoteurs* motors)
 
 void ReseauCapteur::EvitementRotation() //Fonctionne de la même manière pour les rotations
 {
-    while(testCotes);
+    while(testCotes());
     return;
 }
 

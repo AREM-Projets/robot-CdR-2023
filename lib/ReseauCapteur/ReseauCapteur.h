@@ -4,6 +4,7 @@
 #include "BlocMoteurs.h"
 #include "Ultrasonic.h"
 #include "Arduino.h"
+#include "config.h"
 
 class ReseauCapteur
 {

@@ -89,9 +89,6 @@
 /* Erreur max sur un déplacement, doit être >= QUANTUM_DIST (défini dans la section Calibration Mouvement) */
 #define ERREUR_MAX QUANTUM_DIST*1.1
 
-/* Délai automatique après une action [en ms] */
-#define AUTOMATIC_DELAY 100
-
 // --- //
 // Trappe
 // --- //
