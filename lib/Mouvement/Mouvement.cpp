@@ -23,6 +23,8 @@ void Mouvement::deplacement(SensDeplacement sens, double distance/*unit?*/)
 {
     int signe;
     int tempsAttente;
+    int lost_time = 0;
+
     temp_measure = 0;
     if(sens == Avancer)
         signe = 1;
@@ -33,20 +35,18 @@ void Mouvement::deplacement(SensDeplacement sens, double distance/*unit?*/)
     while(temp_measure < distance)
     {
         motors->motors_on();
-        int time = millis();
-        motors->commande_vitesses(signe*VITESSE, signe*VITESSE, signe*VITESSE, signe*VITESSE); //Bouge
-        capteurs->EvitementTranslation(signe, motors); //Regarde autour de lui pour reperer un robot adverse
-        tempsAttente = (QUANTUM_TEMPS - (millis() - time)); //Attend QUANTUM_TEMPS moins le temps de la mesure
-        if(tempsAttente > 0)
-        {
-            delay(tempsAttente); //N'attends que si l'on s'est arrêté moins de QUANTUM_TEMPS
-        }
+        int time_start = millis();
+        motors->commande_vitesses(signe*VITESSE, signe*VITESSE, signe*VITESSE, signe*VITESSE); // Bouge
+        lost_time = capteurs->EvitementTranslation(signe, motors); // Regarde autour de lui pour reperer un robot adverse
+        
+        while(millis() < time_start + lost_time + QUANTUM_TEMPS); // On attend pour avancer la bonne distance
+        
         motors->motors_stop_low_hiz();
         temp_measure += QUANTUM_DIST;
     }
 }
 
-
+/* Unused */
 void Mouvement::mouvementElementaire(int signe)
 {
     motors->motors_on();
@@ -58,6 +58,7 @@ void Mouvement::mouvementElementaire(int signe)
 // Rotation dans la direction précisée.
 void Mouvement::rotate(SensRotation sens)
 {
+    capteurs->EvitementRotation();
     switch (sens)
     {
         case Droite:

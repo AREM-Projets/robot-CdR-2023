@@ -55,10 +55,14 @@
 #define AUTOMATIC_DELAY         500
 
 // --- //
-// Evitement
+// ReseauCapteur
 // --- //
 
-// WIP
+/* Distance minimale au robot adverse pour ne pas s'arrêter */
+#define LIMITE_CM 20
+
+/* Nombre de mesures nécessaires avant de relancer les moteurs */
+#define VERIF 10
 
 // --- //
 // Leds
@@ -84,9 +88,6 @@
 
 /* Erreur max sur un déplacement, doit être >= QUANTUM_DIST (défini dans la section Calibration Mouvement) */
 #define ERREUR_MAX QUANTUM_DIST*1.1
-
-/* Délai automatique après une action [en ms] */
-#define AUTOMATIC_DELAY 100
 
 // --- //
 // Trappe
