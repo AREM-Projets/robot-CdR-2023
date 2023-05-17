@@ -55,10 +55,14 @@
 #define AUTOMATIC_DELAY         500
 
 // --- //
-// Evitement
+// ReseauCapteur
 // --- //
 
-// WIP
+/* Distance minimale au robot adverse pour ne pas s'arrêter */
+#define LIMITE_CM 20
+
+/* Nombre de mesures nécessaires avant de relancer les moteurs */
+#define VERIF 10
 
 // --- //
 // Leds

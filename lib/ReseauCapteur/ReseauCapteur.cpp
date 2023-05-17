@@ -3,9 +3,6 @@
 #include "Ultrasonic.h"
 #include "Arduino.h"
 
-#define LIMITE_CM 20
-#define VERIF 10
-
 ReseauCapteur::ReseauCapteur(Ultrasonic pinAvant1, Ultrasonic pinAvant2, Ultrasonic pinArriere1, Ultrasonic pinArriere2, Ultrasonic pinGauche, Ultrasonic pinDroite)
     : Avant1(pinAvant1), Avant2(pinAvant2), Arriere1(pinArriere1), Arriere2(pinArriere2), Gauche(pinGauche), Droite(pinDroite)
 {
