@@ -37,7 +37,9 @@ void Mouvement::deplacement(SensDeplacement sens, double distance/*unit?*/)
         motors->motors_on();
         int time_start = millis();
         motors->commande_vitesses(signe*VITESSE, signe*VITESSE, signe*VITESSE, signe*VITESSE); // Bouge
-        lost_time = capteurs->EvitementTranslation(signe, motors); // Regarde autour de lui pour reperer un robot adverse
+
+        if(safe_mode)
+            lost_time = capteurs->EvitementTranslation(signe, motors); // Regarde autour de lui pour reperer un robot adverse
         
         while(millis() < time_start + lost_time + QUANTUM_TEMPS); // On attend pour avancer la bonne distance
         
@@ -58,7 +60,8 @@ void Mouvement::mouvementElementaire(int signe)
 // Rotation dans la direction précisée.
 void Mouvement::rotate(SensRotation sens)
 {
-    capteurs->EvitementRotation();
+    if(safe_mode)
+        capteurs->EvitementRotation();
     switch (sens)
     {
         case Droite:
@@ -77,4 +80,8 @@ void Mouvement::rotate(SensRotation sens)
     }
 }
 
+void Mouvement::setMode(Mode mode)
+{
+    safe_mode = (bool) mode;
+}
 

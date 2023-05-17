@@ -6,6 +6,12 @@
 #include "config.h"
 #include "ReseauCapteur.h"
 
+enum Mode
+{
+    Unsafe, // Yes, you may go full speed into that wall...
+    Safe // SONAR ON, pls don't disqualify me
+};
+
 enum SensDeplacement
 {
     Reculer,
@@ -31,11 +37,15 @@ class Mouvement
         // signe = 1 pour avancer et -1 pour reculer
         void mouvementElementaire(int signe);
 
-    // private:
+        void setMode(Mode mode);
   
         BlocMoteurs* motors;
         ReseauCapteur* capteurs;
+
+    private:
+    
         double temp_measure; // for simple methods like forward...
+        bool safe_mode;
 
        
 };
