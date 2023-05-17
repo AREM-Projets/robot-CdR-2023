@@ -6,6 +6,8 @@ Mouvement::Mouvement(BlocMoteurs* moteurs, ReseauCapteur* ResCapteurs)
     motors = moteurs;
     capteurs = ResCapteurs;
 
+    safe_mode = Safe;
+
     /* Debug print */
     if(Serial)
     {
