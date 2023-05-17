@@ -12,7 +12,6 @@
 #include "ReseauCapteur.h"
 #include "Trappe.h"
 #include "ActionneurAvant.h"
-#include "Trajet.h"
 #include "Leds.h"
 
 class Calibration

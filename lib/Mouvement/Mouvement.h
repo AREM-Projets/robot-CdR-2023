@@ -33,7 +33,7 @@ class Mouvement
         // signe = 1 pour avancer et -1 pour reculer
         void mouvementElementaire(int signe);
 
-    private:
+    // private:
   
         BlocMoteurs* motors;
         ReseauCapteur* capteurs;
