@@ -6,8 +6,6 @@ Mouvement::Mouvement(BlocMoteurs* moteurs, ReseauCapteur* ResCapteurs)
     motors = moteurs;
     capteurs = ResCapteurs;
 
-    safe_mode = Safe;
-
     /* Debug print */
     if(Serial)
     {
@@ -40,8 +38,7 @@ void Mouvement::deplacement(SensDeplacement sens, double distance/*unit?*/)
         int time_start = millis();
         motors->commande_vitesses(signe*VITESSE, signe*VITESSE, signe*VITESSE, signe*VITESSE); // Bouge
 
-        if(safe_mode)
-            lost_time = capteurs->EvitementTranslation(signe, motors); // Regarde autour de lui pour reperer un robot adverse
+        lost_time = capteurs->EvitementTranslation(signe, motors); // Regarde autour de lui pour reperer un robot adverse
         
         while(millis() < time_start + lost_time + QUANTUM_TEMPS); // On attend pour avancer la bonne distance
         
@@ -61,10 +58,8 @@ void Mouvement::mouvementElementaire(int signe)
 
 // Rotation dans la direction précisée.
 void Mouvement::rotate(SensRotation sens)
-{
-    if(safe_mode)
-        capteurs->EvitementRotation();
-    switch (sens)
+{ 
+    switch(sens)
     {
         case Droite:
             motors->motors_on();
@@ -79,11 +74,6 @@ void Mouvement::rotate(SensRotation sens)
             delay(DUREE_ROTATION_GAUCHE);
             motors->motors_stop_low_hiz();
             break;
-    }
-}
-
-void Mouvement::setMode(Mode mode)
-{
-    safe_mode = (bool) mode;
+    }  
 }
 

@@ -10,7 +10,6 @@
 #include "Trappe.h"
 #include "ActionneurAvant.h"
 #include "Leds.h"
-#include "Calibration.h"
 
 /* Moteurs */
 SPIClass* dev_spi;
@@ -23,10 +22,10 @@ BlocMoteurs* motors;
 /* Capteurs ultrasons */
 Ultrasonic* capteur_front_left;
 Ultrasonic* capteur_front_right;
-Ultrasonic* capteur_back_left;
-Ultrasonic* capteur_back_right;
-Ultrasonic* capteur_left;
-Ultrasonic* capteur_right;
+// Ultrasonic* capteur_back_left;
+// Ultrasonic* capteur_back_right;
+// Ultrasonic* capteur_left;
+// Ultrasonic* capteur_right;
 ReseauCapteur* capteurs;
 
 /* Mouvement */
@@ -38,8 +37,11 @@ Servo myservo;
 /* Actionneur */
 ActionneurAvant* actionneur;
 
+uint32_t timer_match = 0;
+
 /* Calibration */
-Calibration* calibration;
+
+bool obstacle;
 
 void setup()
 {
@@ -65,12 +67,12 @@ void setup()
     // pinMode(pinUltrasonBRE, INPUT); 
     // pinMode(pinUltrasonBRT, OUTPUT);
 
-    pinMode(pinTeamSelector, INPUT);
+    //pinMode(pinTeamSelector, INPUT);
     
     // pinMode(pinHacheur1, OUTPUT);
     // pinMode(pinHacheur2, OUTPUT);
 
-    pinMode(pinStarter, INPUT);
+    pinMode(pinStarter, INPUT_PULLUP);
     // pinMode(pinLeds, OUTPUT);
 
 
@@ -89,7 +91,7 @@ void setup()
     // capteur_left = new Ultrasonic(pinUltrasonLT, pinUltrasonLE);
     // capteur_right = new Ultrasonic(pinUltrasonRT, pinUltrasonRE);
 
-    //capteurs = new ReseauCapteur(*capteur_front_left, *capteur_front_right, *capteur_back_left, *capteur_back_right, *capteur_left, *capteur_right);
+    capteurs = new ReseauCapteur(capteur_front_left, capteur_front_right);
 
     /* Init mouvement */
     mouvement = new Mouvement(motors, capteurs);
@@ -97,8 +99,7 @@ void setup()
     /* Init serial */
     Serial.begin(115200);
     //while (!Serial);
-    delay(5000); // attendre que le terminal s'ouvre
-
+    
     /* Init Leds */
     /* leds = new Leds(A3);
     leds->startTimer(95000); // start 95s timer
@@ -107,25 +108,44 @@ void setup()
 
     /* Init servo */
     myservo.attach(pinServoPanier);
+    delay(500);
+    fermer(myservo);
 
     /* Calibration */
-    calibration = new Calibration(mouvement);
+    // calibration = new Calibration(mouvement);
 
     /* Actionneur */
-    actionneur = new ActionneurAvant(pinHacheur1, pinHacheur2);
+    // actionneur = new ActionneurAvant(pinHacheur1, pinHacheur2);
 
 
     /* On attend le signal de start */
     Serial.println("Robot initialised");
-    // GLISSIERE A AJOUTER ICI
-    delay(2000);
+
+    while(digitalRead(pinStarter) == HIGH) 
+    {
+        Serial.print("pinStarter : ");
+        Serial.println(digitalRead(pinStarter));
+        delay(100);
+    }
+    timer_match = millis();
+    
     Serial.println("Match started !");
 
-    /* Ajouter du code de test ici */
+    /* -------------------------------------- Ajouter du code de test ici */
 
-    
+    // delay(1000);
+    // mouvement->deplacement(Avancer, 5000);
 
-    /* Fin du code de test*/
+    //mouvement->rotate(Droite);
+
+    /* -------------------------------------- Fin du code de test*/
+
+    /* Code d'HOMOLOGATION */
+    delay(1000);
+    ouvrir(myservo);
+    delay(3000);
+    mouvement->deplacement(Avancer, 2000);
+    fermer(myservo);
 
     Serial.println("Done");
     /* Tests mouvement */
@@ -159,17 +179,16 @@ void setup()
 void loop()
 {
     /* Test servo */
-    Serial.println("Ouvrir");
-    ouvrir(myservo);
-    delay(4000);
-    Serial.println("Fermer");
-    fermer(myservo);
-    delay(4000);
+    // Serial.println("Ouvrir");
+    // ouvrir(myservo);
+    // delay(4000);
+    // Serial.println("Fermer");
+    // fermer(myservo);
+    // delay(4000);
 
     //Serial.println(capteur_front_right->read());
+
     
-    Serial.println(capteur_front_right->read());
-    Serial.println(capteur_front_left->read());
     // Serial.println(capteur_back_left->read());
     // Serial.println(capteur_back_right->read());
     
