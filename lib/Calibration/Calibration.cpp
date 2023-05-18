@@ -88,7 +88,7 @@ void Calibration::test_carre()
     delay(AUTOMATIC_DELAY);
 }
 
-void Calibration::test_global(Servo myservo, ActionneurAvant actionneur, Leds led)
+void Calibration::test_global(Servo myservo, ActionneurAvant actionneur)
 {
     Serial.println("Test Rotations");
     test_rotations();
@@ -118,9 +118,5 @@ void Calibration::test_global(Servo myservo, ActionneurAvant actionneur, Leds le
     Serial.println("Test ActionneurAvant");
     actionneur.serrer();
     actionneur.deserrer();
-
-    Serial.println("Leds");
-    led.On();
-    led.Off();
 
 }
