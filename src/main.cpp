@@ -17,7 +17,7 @@ SPIClass* dev_spi;
 BlocMoteurs* motors;
 
 /* Leds */
-Leds* leds;
+// Leds* leds;
 
 
 /* Capteurs ultrasons */
@@ -35,8 +35,15 @@ Mouvement* mouvement;
 /* Servo */
 Servo myservo;
 
+/* Actionneur */
+ActionneurAvant* actionneur;
+
+/* Calibration */
+Calibration* calibration;
+
 void setup()
 {
+
     /* Configure pins */ 
     pinMode(pinUltrasonFLE, OUTPUT);
     pinMode(pinUltrasonFLT, INPUT);
@@ -64,7 +71,8 @@ void setup()
     pinMode(pinHacheur2, OUTPUT);
 
     pinMode(pinStarter, INPUT);
-    pinMode(pinLeds, OUTPUT);
+    // pinMode(pinLeds, OUTPUT);
+
 
     /* Init moteurs */
     
@@ -89,17 +97,37 @@ void setup()
     /* Init serial */
     Serial.begin(115200);
     while (!Serial);
-    // delay(2000) // attendre que le terminal s'ouvre
+    delay(5000); // attendre que le terminal s'ouvre
 
     /* Init Leds */
-    leds = new Leds(A3);
+    /* leds = new Leds(A3);
     leds->startTimer(95000); // start 95s timer
     leds->Off();
-    // leds->On(); // pour tester l'allumage
+    // leds->On(); // pour tester l'allumage */
 
     /* Init servo */
     myservo.attach(pinServoPanier);
 
+    /* Calibration */
+    calibration = new Calibration(mouvement);
+
+    /* Actionneur */
+    actionneur = new ActionneurAvant(pinHacheur1, pinHacheur2);
+
+
+    /* On attend le signal de start */
+    Serial.println("Robot initialised");
+    // GLISSIERE A AJOUTER ICI
+    delay(2000);
+    Serial.println("Match started !");
+
+    /* Ajouter du code de test ici */
+
+    
+
+    /* Fin du code de test*/
+
+    Serial.println("Done");
     /* Tests mouvement */
     /*
     mouvement->deplacement(Avancer, 1000);
@@ -140,5 +168,5 @@ void loop()
     */
 
     /* Leds */
-    leds->timerEndTest();   
+    // leds->timerEndTest();   
 }

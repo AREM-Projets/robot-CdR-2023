@@ -20,6 +20,8 @@ uint32_t ReseauCapteur::EvitementTranslation(int signe, BlocMoteurs* motors)
             //Si l'un des deux capteurs detecte un obstacle à moins de 20cm, le robot s'arrête 
             motors->motors_stop_low_hiz();
             stop_time = millis();
+            if(Serial)
+                Serial.println("Obstacle detected, robot stopped.");
 
             int secu = 0; //Verifie si le robot abverse s'est éloigné en vérifiant VERIF fois.
             while(secu < VERIF)
@@ -36,6 +38,8 @@ uint32_t ReseauCapteur::EvitementTranslation(int signe, BlocMoteurs* motors)
             // On redémarre le moteur 
             motors->motors_on();
             motors->commande_vitesses(signe*VITESSE, signe*VITESSE, signe*VITESSE, signe*VITESSE);
+            if(Serial)
+                Serial.println("Robot restarted !");
             // On calcule le temps d'arrêt
             start_time = millis();
             time_lost = start_time - stop_time;
@@ -47,6 +51,8 @@ uint32_t ReseauCapteur::EvitementTranslation(int signe, BlocMoteurs* motors)
         {
             motors->motors_stop_low_hiz();
             stop_time = millis();
+            if(Serial)
+                Serial.println("Obstacle detected, robot stopped.");
 
             int secu = 0;
             while(secu < VERIF)
@@ -63,6 +69,8 @@ uint32_t ReseauCapteur::EvitementTranslation(int signe, BlocMoteurs* motors)
             // On redémarre le moteur 
             motors->motors_on();
             motors->commande_vitesses(signe*VITESSE, signe*VITESSE, signe*VITESSE, signe*VITESSE);
+            if(Serial)
+                Serial.println("Robot restarted !");
             // On calcule le temps d'arrêt
             start_time = millis();
             time_lost = start_time - stop_time;
