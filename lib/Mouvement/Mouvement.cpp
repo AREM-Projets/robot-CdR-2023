@@ -21,7 +21,7 @@ Mouvement::~Mouvement()
 }
 
 // Fait avancer le robot... For testing purposes.
-void Mouvement::deplacement(SensDeplacement sens, double distance/*unit?*/)
+void Mouvement::deplacement(SensDeplacement sens = Avancer, double distance/*unit?*/)
 {
     int signe;
     int tempsAttente;

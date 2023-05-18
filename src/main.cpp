@@ -59,16 +59,16 @@ void setup()
     // pinMode(pinUltrasonLE, INPUT); 
     // pinMode(pinUltrasonLT, OUTPUT);
 
-    pinMode(pinUltrasonBLE, INPUT); 
-    pinMode(pinUltrasonBLT, OUTPUT);
+    // pinMode(pinUltrasonBLE, INPUT); 
+    // pinMode(pinUltrasonBLT, OUTPUT);
 
-    pinMode(pinUltrasonBRE, INPUT); 
-    pinMode(pinUltrasonBRT, OUTPUT);
+    // pinMode(pinUltrasonBRE, INPUT); 
+    // pinMode(pinUltrasonBRT, OUTPUT);
 
     pinMode(pinTeamSelector, INPUT);
     
-    pinMode(pinHacheur1, OUTPUT);
-    pinMode(pinHacheur2, OUTPUT);
+    // pinMode(pinHacheur1, OUTPUT);
+    // pinMode(pinHacheur2, OUTPUT);
 
     pinMode(pinStarter, INPUT);
     // pinMode(pinLeds, OUTPUT);
@@ -82,10 +82,10 @@ void setup()
  
     /* Init capteurs */
 
-     capteur_front_left = new Ultrasonic(pinUltrasonFLT, pinUltrasonFLE);
+    capteur_front_left = new Ultrasonic(pinUltrasonFLT, pinUltrasonFLE);
     capteur_front_right = new Ultrasonic(pinUltrasonFRT, pinUltrasonFRE);
-    capteur_back_left = new Ultrasonic(pinUltrasonBLT, pinUltrasonBLE);
-    capteur_back_right = new Ultrasonic(pinUltrasonBLT, pinUltrasonBRE);
+    // capteur_back_left = new Ultrasonic(pinUltrasonBLT, pinUltrasonBLE);
+    // capteur_back_right = new Ultrasonic(pinUltrasonBLT, pinUltrasonBRE);
     // capteur_left = new Ultrasonic(pinUltrasonLT, pinUltrasonLE);
     // capteur_right = new Ultrasonic(pinUltrasonRT, pinUltrasonRE);
 
@@ -170,8 +170,8 @@ void loop()
     
     Serial.println(capteur_front_right->read());
     Serial.println(capteur_front_left->read());
-    Serial.println(capteur_back_left->read());
-    Serial.println(capteur_back_right->read());
+    // Serial.println(capteur_back_left->read());
+    // Serial.println(capteur_back_right->read());
     
 
     /* Leds */
