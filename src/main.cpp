@@ -141,11 +141,19 @@ void setup()
     /* -------------------------------------- Fin du code de test*/
 
     /* Code d'HOMOLOGATION */
+
+    // Servo
     delay(1000);
     ouvrir(myservo);
     delay(3000);
-    mouvement->deplacement(Avancer, 2000);
     fermer(myservo);
+
+    // Demi tour etc.
+    delay(1000);
+    mouvement->deplacement(Avancer, 2000);
+    mouvement->rotate(Droite);
+    mouvement->rotate(Droite);
+    mouvement->deplacement(Avancer, 1950);
 
     Serial.println("Done");
     /* Tests mouvement */

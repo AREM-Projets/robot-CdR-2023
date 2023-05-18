@@ -45,6 +45,7 @@ void Mouvement::deplacement(SensDeplacement sens, double distance/*unit?*/)
         motors->motors_stop_low_hiz();
         temp_measure += QUANTUM_DIST;
     }
+    delay(AUTOMATIC_DELAY);
 }
 
 /* Unused */
@@ -75,5 +76,6 @@ void Mouvement::rotate(SensRotation sens)
             motors->motors_stop_low_hiz();
             break;
     }  
+    delay(AUTOMATIC_DELAY);
 }
 
