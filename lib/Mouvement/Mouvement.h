@@ -31,7 +31,7 @@ class Mouvement
         Mouvement(BlocMoteurs* _moteurs, ReseauCapteur* ResCapteurs);
         ~Mouvement();
 
-        void deplacement(SensDeplacement sens = Avancer, double distance/*unit?*/);
+        void deplacement(SensDeplacement sens, double distance/*unit?*/);
         void rotate(SensRotation sens);
 
         // signe = 1 pour avancer et -1 pour reculer
