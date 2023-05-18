@@ -45,19 +45,19 @@ void setup()
 {
 
     /* Configure pins */ 
-    pinMode(pinUltrasonFLE, OUTPUT);
-    pinMode(pinUltrasonFLT, INPUT);
+     pinMode(pinUltrasonFLE, INPUT);
+     pinMode(pinUltrasonFLT, OUTPUT);
 
     pinMode(pinServoPanier, OUTPUT);
 
     pinMode(pinUltrasonFRE, INPUT);
     pinMode(pinUltrasonFRT, OUTPUT);
 
-    pinMode(pinUltrasonRE, INPUT);
-    pinMode(pinUltrasonRT, OUTPUT);
+    // pinMode(pinUltrasonRE, INPUT);
+    // pinMode(pinUltrasonRT, OUTPUT);
 
-    pinMode(pinUltrasonLE, INPUT); 
-    pinMode(pinUltrasonLT, OUTPUT);
+    // pinMode(pinUltrasonLE, INPUT); 
+    // pinMode(pinUltrasonLT, OUTPUT);
 
     pinMode(pinUltrasonBLE, INPUT); 
     pinMode(pinUltrasonBLT, OUTPUT);
@@ -82,21 +82,21 @@ void setup()
  
     /* Init capteurs */
 
-    capteur_front_left = new Ultrasonic(pinUltrasonFLT, pinUltrasonFLE);
+     capteur_front_left = new Ultrasonic(pinUltrasonFLT, pinUltrasonFLE);
     capteur_front_right = new Ultrasonic(pinUltrasonFRT, pinUltrasonFRE);
     capteur_back_left = new Ultrasonic(pinUltrasonBLT, pinUltrasonBLE);
-    capteur_back_left = new Ultrasonic(pinUltrasonBLT, pinUltrasonBRE);
-    capteur_left = new Ultrasonic(pinUltrasonLT, pinUltrasonLE);
-    capteur_right = new Ultrasonic(pinUltrasonRT, pinUltrasonRE);
+    capteur_back_right = new Ultrasonic(pinUltrasonBLT, pinUltrasonBRE);
+    // capteur_left = new Ultrasonic(pinUltrasonLT, pinUltrasonLE);
+    // capteur_right = new Ultrasonic(pinUltrasonRT, pinUltrasonRE);
 
-    capteurs = new ReseauCapteur(*capteur_front_left, *capteur_front_right, *capteur_back_left, *capteur_back_right, *capteur_left, *capteur_right);
+    //capteurs = new ReseauCapteur(*capteur_front_left, *capteur_front_right, *capteur_back_left, *capteur_back_right, *capteur_left, *capteur_right);
 
     /* Init mouvement */
     mouvement = new Mouvement(motors, capteurs);
 
     /* Init serial */
     Serial.begin(115200);
-    while (!Serial);
+    //while (!Serial);
     delay(5000); // attendre que le terminal s'ouvre
 
     /* Init Leds */
@@ -159,13 +159,20 @@ void setup()
 void loop()
 {
     /* Test servo */
-    /*
+    Serial.println("Ouvrir");
     ouvrir(myservo);
     delay(4000);
-
+    Serial.println("Fermer");
     fermer(myservo);
     delay(4000);
-    */
+
+    //Serial.println(capteur_front_right->read());
+    
+    Serial.println(capteur_front_right->read());
+    Serial.println(capteur_front_left->read());
+    Serial.println(capteur_back_left->read());
+    Serial.println(capteur_back_right->read());
+    
 
     /* Leds */
     // leds->timerEndTest();   
