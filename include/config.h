@@ -94,10 +94,10 @@
 // --- //
 
 /* Commande du servomoteur pour mettre la trappe en position fermée */
-#define POS_FERME 10
+#define POS_FERME 10 // > 0 
 
 /* Commande du servomoteur pour mettre la trappe en position ouverte */
-#define POS_OUVERTE 170
+#define POS_OUVERTE 170 // NE PAS DEPASSER 180
 
 // --- //
 // Ultrasonics
