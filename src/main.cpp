@@ -66,12 +66,16 @@ void setup()
 
     /* On attend le signal de start */
     Serial.println("Robot initialised");
+}
 
+
+void loop()
+{
     while(digitalRead(pinStarter) == HIGH) 
     {
-        Serial.print("pinStarter : ");
-        Serial.println(digitalRead(pinStarter));
-        delay(100);
+        Serial.println("Waiting for start");
+        // Serial.println(digitalRead(pinStarter));
+        delay(200);
     }
 
     timer_match = millis();
@@ -87,17 +91,17 @@ void setup()
 
     // Demi tour etc.
     delay(1000);
-    mouvement->deplacement(Avancer, 2000);
+    mouvement->deplacement(Avancer, 2100);
     mouvement->rotate(Droite);
     mouvement->rotate(Droite);
-    mouvement->deplacement(Avancer, 1950);
+    mouvement->deplacement(Avancer, 2050);
 
     /*--- Fin de la stratégie... ---*/
     Serial.println("Done");
-}
-
-
-void loop()
-{
-       
+    while (digitalRead(pinStarter) == 0)
+    {
+        Serial.println("Waiting for next match");
+        delay(200);
+    }
+    
 }
