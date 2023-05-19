@@ -44,6 +44,7 @@ void setup()
     dev_spi = new SPIClass(D11, D12, D13);
     dev_spi->begin();
     motors = new BlocMoteurs(dev_spi);
+    motors->motors_stop_hard_hiz();
  
     /* Init capteurs */
     capteur_front_left = new Ultrasonic(pinUltrasonFLT, pinUltrasonFLE);
@@ -71,6 +72,7 @@ void setup()
 
 void loop()
 {
+    motors->motors_stop_hard_hiz(); // Déplacement libre avant le début 
     while(digitalRead(pinStarter) == HIGH) 
     {
         Serial.println("Waiting for start");
@@ -92,8 +94,8 @@ void loop()
     // Demi tour etc.
     delay(1000);
     mouvement->deplacement(Avancer, 2100);
-    mouvement->rotate(Droite);
-    mouvement->rotate(Droite);
+    mouvement->rotate(Gauche);
+    mouvement->rotate(Gauche);
     mouvement->deplacement(Avancer, 2050);
 
     /*--- Fin de la stratégie... ---*/
