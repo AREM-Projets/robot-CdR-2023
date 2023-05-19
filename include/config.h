@@ -94,10 +94,10 @@
 // --- //
 
 /* Commande du servomoteur pour mettre la trappe en position fermée */
-#define POS_FERME 10
+#define POS_FERME 10 // > 0 
 
 /* Commande du servomoteur pour mettre la trappe en position ouverte */
-#define POS_OUVERTE 160
+#define POS_OUVERTE 170 // NE PAS DEPASSER 180
 
 // --- //
 // Ultrasonics
@@ -111,23 +111,21 @@
 // Pins
 // --- //
 
-#define pinUltrasonFLE D1       // Pin "Echo" du capteur à ultrason Avant Gauche (câble orange sur le PCB) (en fait c'est peut-être le droite) (FLE c'est pour Feurward Left Echo)
-#define pinUltrasonFLT D2       // Pin "Trig" du capteur à ultrason Avant Gauche (câble jaune sur le PCB)
+#define pinUltrasonFLE D9       // Pin "Echo" du capteur à ultrason Avant Gauche (câble orange sur le PCB) (en fait c'est peut-être le droite) (FLE c'est pour Feurward Left Echo)
+#define pinUltrasonFLT D10       // Pin "Trig" du capteur à ultrason Avant Gauche (câble jaune sur le PCB)
 // La D3 est pas utilisable
-#define pinServoPanier D4       // Pin commandant le servomoteur du portail du panier orange (câble vert sur le PCB)
+#define pinServoPanier D14       // Pin commandant le servomoteur du portail du panier orange (câble vert sur le PCB)
 #define pinUltrasonFRE D5       // Pin "Echo" du capteur à ultrason Avant Droite (câble orange sur le PCB) (en fait c'est peut-être le gauche)
 #define pinUltrasonFRT D6       // Pin "Trig" du capteur à ultrason Avant Droite (câble jaune sur le PCB)
-#define pinUltrasonRE D7        // Pin "Echo" du capteur à ultrason Droite (câble orange sur le PCB)
-#define pinUltrasonRT D8        // Pin "Trig" du capteur à ultrason Droite (câble vert sur le PCB)
-#define pinUltrasonLE D9        // Pin "Echo" du capteur à ultrason Gauche (câble jaune sur le PCB)
-#define pinUltrasonLT D10       // Pin "Trig" du capteur à ultrason Gauche (câble blanc sur le PCB)
-#define pinUltrasonBLE D11      // Pin "Echo" du capteur à ultrason Avant Gauche (câble gris sur le PCB) (en fait c'est peut-être le droite)
-#define pinUltrasonBLT D12      // Pin "Trig" du capteur à ultrason Avant Gauche (câble bleu sur le PCB)
-#define pinUltrasonBRE D13      // Pin "Echo" du capteur à ultrason Avant Droite (câble orange sur le PCB) (en fait c'est peut-être le gauche)
-#define pinUltrasonBRT D14      // Pin "Trig" du capteur à ultrason Avant Droite (câble rouge sur le PCB)
-#define pinTeamSelector D15     // Pin du switch de sélection de l'équipe (câble jaune clair sur le PCB) --> à souder
+// #define pinUltrasonRE D7        // Pin "Echo" du capteur à ultrason Droite (câble orange sur le PCB)
+// #define pinUltrasonRT D8        // Pin "Trig" du capteur à ultrason Droite (câble vert sur le PCB)
+// #define pinUltrasonLE D9        // Pin "Echo" du capteur à ultrason Gauche (câble jaune sur le PCB)
+// #define pinUltrasonLT D10       // Pin "Trig" du capteur à ultrason Gauche (câble blanc sur le PCB)
+// #define pinUltrasonBLE D7      // Pin "Echo" du capteur à ultrason Avant Gauche (câble gris sur le PCB) (en fait c'est peut-être le droite)
+// #define pinUltrasonBLT D8      // Pin "Trig" du capteur à ultrason Avant Gauche (câble bleu sur le PCB)
+// #define pinUltrasonBRE D1      // Pin "Echo" du capteur à ultrason Avant Droite (câble orange sur le PCB) (en fait c'est peut-être le gauche)
+// #define pinUltrasonBRT D3      // Pin "Trig" du capteur à ultrason Avant Droite (câble rouge sur le PCB)
+//#define pinTeamSelector D15     // Pin du switch de sélection de l'équipe (câble jaune clair sur le PCB) --> à souder
 
-#define pinHacheur1 A0          // Pin "INT1" du hacheur du MCC de l'actionneur presse palais (câble bleu sur le PCB)
-#define pinHacheur2 A1          // Pin "INT2" du hacheur du MCC de l'actionneur presse palais (câble jaune sur le PCB)
-#define pinStarter A2           // Pin du machin sur lequel on tire pour lancer le programme du robot au début d'un match (câble rouge sur le PCB)
+#define pinStarter D15          // Pin du machin sur lequel on tire pour lancer le programme du robot au début d'un match (câble rouge sur le PCB)
 #define pinLeds A3              // Pin de l'alimentation des LEDs (en analogique parce que y'avait plus de pins digitales) (câble rouge sur le PCB)

@@ -1,9 +1,9 @@
 #include "ReseauCapteur.h"
 
-ReseauCapteur::ReseauCapteur(Ultrasonic pinAvant1, Ultrasonic pinAvant2, Ultrasonic pinArriere1, Ultrasonic pinArriere2, Ultrasonic pinGauche, Ultrasonic pinDroite)
-    : Avant1(pinAvant1), Avant2(pinAvant2), Arriere1(pinArriere1), Arriere2(pinArriere2), Gauche(pinGauche), Droite(pinDroite)
+ReseauCapteur::ReseauCapteur(Ultrasonic* AvantDroite, Ultrasonic* AvantGauche)
 {
-    //Mettre en argument les paires de pin
+    Avant1 = AvantDroite;
+    Avant2 = AvantGauche;
 }
 
 uint32_t ReseauCapteur::EvitementTranslation(int signe, BlocMoteurs* motors)
@@ -11,11 +11,19 @@ uint32_t ReseauCapteur::EvitementTranslation(int signe, BlocMoteurs* motors)
     uint32_t stop_time;
     uint32_t start_time;
     uint32_t time_lost = 0;
+
+    uint16_t distance_avant_gauche;
+    uint16_t distance_avant_droite;
+
+    // Serial.println("Evitement");
     switch (signe) //Choix d'avant ou arriere
     {
     case 1:
         
-        if (((Avant1.read() < LIMITE_CM) && (Avant1.read() != 0)) || ((Avant2.read() < LIMITE_CM) && (Avant2.read() != 0)))
+        distance_avant_droite = Avant1->read();
+        distance_avant_gauche = Avant2->read();
+
+        if (((distance_avant_droite < LIMITE_CM) && (distance_avant_droite != 0)) || ((distance_avant_gauche < LIMITE_CM) && (distance_avant_gauche != 0)))
         {
             //Si l'un des deux capteurs detecte un obstacle à moins de 20cm, le robot s'arrête 
             motors->motors_stop_low_hiz();
@@ -26,13 +34,16 @@ uint32_t ReseauCapteur::EvitementTranslation(int signe, BlocMoteurs* motors)
             int secu = 0; //Verifie si le robot abverse s'est éloigné en vérifiant VERIF fois.
             while(secu < VERIF)
             {
-                if (((Avant1.read() > LIMITE_CM) && (Avant1.read() != 0)) || ((Avant2.read() > LIMITE_CM) && (Avant2.read() != 0)))
+                distance_avant_droite = Avant1->read();
+                distance_avant_gauche = Avant2->read();
+
+                if (((distance_avant_droite < LIMITE_CM) && (distance_avant_droite != 0)) || ((distance_avant_gauche < LIMITE_CM) && (distance_avant_gauche != 0)))
                 {
-                    secu++;
+                    secu = 0;
                 }
                 else
                 {
-                    secu = 0;
+                    secu++;
                 }
             }
             // On redémarre le moteur 
@@ -46,50 +57,38 @@ uint32_t ReseauCapteur::EvitementTranslation(int signe, BlocMoteurs* motors)
         }
         break;
     
-    case -1: //Idem pour l'arriere   
-        if (((Arriere1.read() < LIMITE_CM) && (Arriere1.read() != 0)) || ((Arriere2.read() < LIMITE_CM) && (Arriere2.read() != 0))) 
-        {
-            motors->motors_stop_low_hiz();
-            stop_time = millis();
-            if(Serial)
-                Serial.println("Obstacle detected, robot stopped.");
+    case -1: // ON A PLUS DE CAPTEURS LOL
 
-            int secu = 0;
-            while(secu < VERIF)
-            {
-                if (((Arriere1.read() > LIMITE_CM) && (Arriere1.read() != 0)) || ((Arriere2.read() > LIMITE_CM) && (Arriere2.read() != 0)))
-                {
-                    secu++;
-                }
-                else
-                {
-                    secu = 0;
-                }
-            }
-            // On redémarre le moteur 
-            motors->motors_on();
-            motors->commande_vitesses(signe*VITESSE, signe*VITESSE, signe*VITESSE, signe*VITESSE);
-            if(Serial)
-                Serial.println("Robot restarted !");
-            // On calcule le temps d'arrêt
-            start_time = millis();
-            time_lost = start_time - stop_time;
-        }
+        // if (((Arriere1.read() < LIMITE_CM) && (Arriere1.read() != 0)) || ((Arriere2.read() < LIMITE_CM) && (Arriere2.read() != 0))) 
+        // {
+        //     motors->motors_stop_low_hiz();
+        //     stop_time = millis();
+        //     if(Serial)
+        //         Serial.println("Obstacle detected, robot stopped.");
+
+        //     int secu = 0;
+        //     while(secu < VERIF)
+        //     {
+        //         if (((Arriere1.read() > LIMITE_CM) && (Arriere1.read() != 0)) || ((Arriere2.read() > LIMITE_CM) && (Arriere2.read() != 0)))
+        //         {
+        //             secu++;
+        //         }
+        //         else
+        //         {
+        //             secu = 0;
+        //         }
+        //     }
+        //     // On redémarre le moteur 
+        //     motors->motors_on();
+        //     motors->commande_vitesses(signe*VITESSE, signe*VITESSE, signe*VITESSE, signe*VITESSE);
+        //     if(Serial)
+        //         Serial.println("Robot restarted !");
+        //     // On calcule le temps d'arrêt
+        //     start_time = millis();
+        //     time_lost = start_time - stop_time;
+        // }
         break;
     }
     return time_lost;
 }
 
-void ReseauCapteur::EvitementRotation() //Fonctionne de la même manière pour les rotations
-{
-    while(testCotes());
-    return;
-}
-
-bool ReseauCapteur::testCotes()
-{
-    bool test_droite = Droite.read() < LIMITE_CM && Droite.read() != 0;
-    bool test_gauche = Gauche.read() < LIMITE_CM && Gauche.read() != 0;
-
-    return test_gauche && test_droite;
-}
