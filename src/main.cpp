@@ -8,8 +8,6 @@
 #include "Mouvement.h"
 #include "ReseauCapteur.h"
 #include "Trappe.h"
-#include "ActionneurAvant.h"
-#include "Leds.h"
 
 /* Moteurs */
 SPIClass* dev_spi;
@@ -41,7 +39,6 @@ void setup()
     pinMode(pinUltrasonFRT, OUTPUT);
 
     pinMode(pinStarter, INPUT_PULLUP);
-
 
     /* Init moteurs */
     dev_spi = new SPIClass(D11, D12, D13);
@@ -80,7 +77,7 @@ void setup()
     timer_match = millis();
     Serial.println("Match started !");
 
-    /* Code de la stratégie */
+    /*--- Code de la stratégie ---*/
 
     // Servo
     delay(1000);
@@ -95,6 +92,7 @@ void setup()
     mouvement->rotate(Droite);
     mouvement->deplacement(Avancer, 1950);
 
+    /*--- Fin de la stratégie... ---*/
     Serial.println("Done");
 }
 
