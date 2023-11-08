@@ -37,7 +37,7 @@
 #define QUANTUM_TEMPS           100      
 
 /* Distance parcourue par un déplacement élémentaire [en ??] */
-#define QUANTUM_DIST            100 // /!\ PLACEHOLDER /!\ à mesurer     
+#define QUANTUM_DIST            (250 * VITESSE) // /!\ PLACEHOLDER /!\ à mesurer     
 
 /* Durée d'une rotation de 90° vers la droite */
 #define DUREE_ROTATION_DROITE   1002
@@ -49,7 +49,7 @@
 #define VITESSE_ROTATION        0.4
 
 /* Vitesse normalisée des moteurs pendant un déplacement en ligne droite (entre 0 et 1) */
-#define VITESSE                 0.4
+#define VITESSE                 0.6
 
 /* Délai entre deux déplacements */
 #define AUTOMATIC_DELAY         500

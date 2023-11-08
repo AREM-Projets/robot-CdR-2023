@@ -9,13 +9,15 @@
 enum SensDeplacement
 {
     Reculer,
-    Avancer
+    Avancer,
+    Gauche, // vive les roues mécanum 
+    Droite
 };
 
 enum SensRotation
 {
-    Gauche,
-    Droite
+    Trigo,
+    Horaire
 };
 
 // Classe mouvement pour des déplacements de base
@@ -42,4 +44,4 @@ class Mouvement
        
 };
 
-#endif
+#endif /* MOUVEMENT_H */
